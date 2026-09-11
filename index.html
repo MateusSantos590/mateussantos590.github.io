@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Mateus Santos Telles</title>
+<meta name="description" content="Portfólio de Mateus Santos Telles — analista de dados em formação. Python, SQL e Power BI para transformar dados em decisões.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f6f5f2;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #eeece6;
+    --border: #ddd9d0;
+    --text: #1c1e1a;
+    --text-dim: #5c5f57;
+    --text-faint: #92948b;
+    --accent: #0f7a5c;
+    --accent-soft: #d9ede5;
+    --amber: #a86a1f;
+    --amber-soft: #f3e6d3;
+    --code-bg: #1c1e1a;
+    --code-text: #e8ecf1;
+    --shadow: 0 1px 2px rgba(28,30,26,0.04), 0 8px 24px rgba(28,30,26,0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0a0e14;
+      --bg-alt: #0d1219;
+      --surface: #12171f;
+      --surface-2: #171d27;
+      --border: #232b38;
+      --text: #e8ecf1;
+      --text-dim: #a1acbd;
+      --text-faint: #667186;
+      --accent: #3ddc97;
+      --accent-soft: rgba(61,220,151,0.12);
+      --amber: #ffb454;
+      --amber-soft: rgba(255,180,84,0.12);
+      --code-bg: #060a10;
+      --code-text: #d7dde6;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0a0e14;
+    --bg-alt: #0d1219;
+    --surface: #12171f;
+    --surface-2: #171d27;
+    --border: #232b38;
+    --text: #e8ecf1;
+    --text-dim: #a1acbd;
+    --text-faint: #667186;
+    --accent: #3ddc97;
+    --accent-soft: rgba(61,220,151,0.12);
+    --amber: #ffb454;
+    --amber-soft: rgba(255,180,84,0.12);
+    --code-bg: #060a10;
+    --code-text: #d7dde6;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: 24px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; }
+
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; letter-spacing: -0.01em; text-wrap: balance; margin: 0; }
+  code, .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  a { color: inherit; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-block: 18px;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  nav.scrolled { border-bottom-color: var(--border); }
+  .brand { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 600; }
+  .brand .dot { color: var(--accent); }
+  .navlinks { display: flex; gap: 28px; font-size: 0.9rem; color: var(--text-dim); }
+  .navlinks a { text-decoration: none; position: relative; }
+  .navlinks a:hover { color: var(--text); }
+  .navlinks a .num { color: var(--amber); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; margin-right: 4px; }
+  @media (max-width: 640px) { .navlinks { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding-block: 64px 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 860px) { .hero { grid-template-columns: 1fr; padding-block: 40px 32px; } }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--accent);
+    background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    padding: 5px 12px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .eyebrow .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  .hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); line-height: 1.08; }
+  .hero h1 .hl { color: var(--accent); }
+  .hero p.lead { color: var(--text-dim); font-size: 1.05rem; max-width: 46ch; margin-top: 18px; }
+
+  .hero-cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.92rem;
+    padding: 12px 22px; border-radius: 8px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--accent); color: #06140e; }
+  .btn-primary:hover { box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 35%, transparent); }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--text-faint); }
+
+  /* terminal card */
+  .terminal {
+    background: var(--code-bg); border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .terminal-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: color-mix(in srgb, var(--code-bg) 80%, white 6%); }
+  .terminal-bar span { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .terminal-bar span:nth-child(1) { background: #ff5f57; }
+  .terminal-bar span:nth-child(2) { background: #febc2e; }
+  .terminal-bar span:nth-child(3) { background: #28c840; }
+  .terminal-body { padding: 18px 20px 22px; font-family: 'JetBrains Mono', monospace; font-size: 0.83rem; color: var(--code-text); min-height: 190px; }
+  .terminal-body .muted { color: #6b7688; }
+  .terminal-body .kw { color: #ff9d5c; }
+  .terminal-body .str { color: var(--accent, #3ddc97); }
+  .terminal-body .num { color: var(--amber, #ffb454); }
+  .caret { display: inline-block; width: 7px; height: 1em; background: var(--accent); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* ---------- SECTION SHELL ---------- */
+  section { padding-block: 64px; border-top: 1px solid var(--border); }
+  .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 36px; }
+  .section-head .idx { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-size: 0.95rem; }
+  .section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 44px; }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-grid p { color: var(--text-dim); margin: 0 0 16px; max-width: 60ch; }
+  .about-grid strong { color: var(--text); font-weight: 600; }
+
+  .kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; align-content: start; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+  .kpi .val { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .kpi .lbl { font-size: 0.78rem; color: var(--text-faint); margin-top: 4px; }
+
+  .stack-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-dim); background: var(--surface-2); border: 1px solid var(--border); padding: 5px 11px; border-radius: 6px; }
+
+  /* ---------- PROJECTS ---------- */
+  .project {
+    border: 1px solid var(--border); border-radius: 12px; background: var(--surface);
+    margin-bottom: 20px; overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .project:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); transform: translateY(-2px); }
+  .project-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 24px; cursor: default; }
+  .project-title { font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; }
+  .project-title .fn { color: var(--amber); }
+  .project-title .arg { color: var(--text-faint); }
+  .project-body { padding: 0 24px 24px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; }
+  @media (max-width: 760px) { .project-body { grid-template-columns: 1fr; } }
+  .project-body p { color: var(--text-dim); margin: 0 0 14px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .project-tags span { font-size: 0.72rem; color: var(--text-faint); background: var(--surface-2); padding: 3px 9px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; }
+  .project-link { font-size: 0.85rem; font-weight: 600; color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .project-link:hover { text-decoration: underline; }
+
+  .result-card { background: var(--code-bg); border-radius: 10px; padding: 18px 20px; }
+  .result-card .r-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: #6b7688; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--code-text); }
+  .bar-track { flex: 1; height: 8px; background: color-mix(in srgb, var(--code-bg) 60%, white 10%); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+  .bar-row .bar-val { width: 34px; text-align: right; color: var(--amber); font-variant-numeric: tabular-nums; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-panel {
+    background: var(--code-bg); border-radius: 14px; padding: 40px 36px;
+    display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center;
+  }
+  @media (max-width: 720px) { .contact-panel { grid-template-columns: 1fr; text-align: left; } }
+  .contact-panel h2 { color: var(--code-text); font-size: clamp(1.6rem, 3.4vw, 2.3rem); }
+  .contact-panel .endpoint { font-family: 'JetBrains Mono', monospace; color: #6b7688; font-size: 0.85rem; margin-top: 10px; }
+  .contact-panel .endpoint .method { color: var(--accent); }
+  .contact-links { display: flex; flex-direction: column; gap: 10px; }
+  .contact-links a {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; text-decoration: none;
+    color: var(--code-text); border: 1px solid #232b38; padding: 10px 18px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .contact-links a:hover { border-color: var(--accent); background: rgba(61,220,151,0.06); }
+  .contact-links a .arrow { color: var(--accent); }
+
+  footer { padding-block: 32px 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 0.8rem; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; }
+
+  /* reveal on scroll */
+  .reveal { opacity: 1; transform: none; }
+  .reveal.pending { opacity: 0; transform: translateY(14px); }
+  .reveal.in { animation: rise 0.6s ease forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav id="nav">
+    <div class="brand">mateus<span class="dot">.</span>dev</div>
+    <div class="navlinks">
+      <a href="#sobre"><span class="num">01</span>sobre</a>
+      <a href="#projetos"><span class="num">02</span>projetos</a>
+      <a href="#contato"><span class="num">03</span>contato</a>
+    </div>
+  </nav>
+
+  <section class="hero" style="border-top:none; padding-top: 8px;">
+    <div>
+      <div class="eyebrow"><span class="pulse"></span>disponível para estágio &amp; projetos</div>
+      <h1>Transformo dados brutos em <span class="hl">decisões</span>, não só em gráficos.</h1>
+      <p class="lead">Mateus Santos Telles — analista de dados em formação, São Paulo. Python, SQL e Power BI para achar o número que muda a decisão de alguém.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#projetos">Ver projetos</a>
+        <a class="btn btn-ghost" href="#contato">Falar comigo</a>
+      </div>
+    </div>
+    <div class="terminal" aria-hidden="true">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div class="terminal-body" id="typeTarget"></div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="section-head"><span class="idx">01</span><h2>Sobre</h2></div>
+    <div class="about-grid">
+      <div class="reveal pending">
+        <p>Estudante de <strong>Análise e Desenvolvimento de Sistemas</strong> na UNG (3º semestre), construindo carreira na área de dados um projeto real de cada vez — não só teoria de curso.</p>
+        <p>Fora da faculdade, toco a <strong>NexaData Insights</strong>, meu próprio negócio de automação e BI para pequenos comércios: dashboards, landing pages e automação de atendimento via WhatsApp.</p>
+        <p>Hoje busco minha primeira oportunidade como <strong>Analista de Dados / BI Jr.</strong> — e prefiro mostrar isso com projetos que rodam de verdade a com um currículo cheio de adjetivos.</p>
+        <div class="stack-row">
+          <span class="chip">python</span><span class="chip">sql</span><span class="chip">pandas</span>
+          <span class="chip">power bi</span><span class="chip">postgresql</span><span class="chip">sqlite</span>
+          <span class="chip">n8n</span><span class="chip">fastapi</span>
+        </div>
+      </div>
+      <div class="kpis reveal pending">
+        <div class="kpi"><div class="val">3M+</div><div class="lbl">registros analisados (ENEM)</div></div>
+        <div class="kpi"><div class="val">0,71</div><div class="lbl">correlação renda × desempenho</div></div>
+        <div class="kpi"><div class="val">3</div><div class="lbl">projetos publicados</div></div>
+        <div class="kpi"><div class="val">2027</div><div class="lbl">previsão de formatura</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="section-head"><span class="idx">02</span><h2>Projetos</h2></div>
+
+    <div class="project reveal pending">
+      <div class="project-head">
+        <div class="project-title"><span class="fn">analisar</span>(<span class="arg">"enem_2023.csv"</span>)</div>
+      </div>
+      <div class="project-body">
+        <div>
+          <p>Investigação da relação entre contexto socioeconômico e desempenho no ENEM, cruzando renda familiar per capita com notas em mais de 3 milhões de registros.</p>
+          <div class="project-tags"><span>python</span><span>pandas</span><span>sql</span><span>power bi</span><span>seaborn</span></div>
+          <a class="project-link" href="https://github.com/MateusSantos590/Projeto_analise_dados-desigualdade_educacional_no_brasil_ENEM23" target="_blank" rel="noopener">ver repositório →</a>
+        </div>
+        <div class="result-card">
+          <div class="r-label">correlação por variável</div>
+          <div class="bar-row"><span style="width:88px">renda × mat.</span><div class="bar-track"><div class="bar-fill" style="width:71%"></div></div><span class="bar-val">0.71</span></div>
+          <div class="bar-row"><span style="width:88px">renda × ling.</span><div class="bar-track"><div class="bar-fill" style="width:54%"></div></div><span class="bar-val">0.54</span></div>
+          <div class="bar-row"><span style="width:88px">escola × nota</span><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><span class="bar-val">0.38</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project reveal pending">
+      <div class="project-head">
+        <div class="project-title"><span class="fn">rodar</span>(<span class="arg">"flappy_bird_deluxe"</span>)</div>
+      </div>
+      <div class="project-body">
+        <div>
+          <p>Flappy Bird construído do zero em Python: temas visuais, sistema de moedas, power-ups desbloqueáveis, skins e som sintetizado por procedimento — com README e CHANGELOG como um produto de verdade.</p>
+          <div class="project-tags"><span>python</span><span>pygame</span><span>audio synthesis</span></div>
+          <a class="project-link" href="https://github.com/MateusSantos590/Game_Flappy-Bird-Custom" target="_blank" rel="noopener">ver repositório →</a>
+        </div>
+        <div class="result-card">
+          <div class="r-label">o que tem dentro</div>
+          <div class="bar-row"><span style="width:88px">skins</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--amber)"></div></div><span class="bar-val">6+</span></div>
+          <div class="bar-row"><span style="width:88px">power-ups</span><div class="bar-track"><div class="bar-fill" style="width:70%; background:var(--amber)"></div></div><span class="bar-val">4</span></div>
+          <div class="bar-row"><span style="width:88px">save system</span><div class="bar-track"><div class="bar-fill" style="width:100%; background:var(--amber)"></div></div><span class="bar-val">✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project reveal pending">
+      <div class="project-head">
+        <div class="project-title"><span class="fn">proteger</span>(<span class="arg">"credenciais"</span>)</div>
+      </div>
+      <div class="project-body">
+        <div>
+          <p>Gerenciador de senhas em Python focado em segurança e uso prático no dia a dia — pensado para resolver um problema real, não como exercício de curso.</p>
+          <div class="project-tags"><span>python</span><span>segurança</span></div>
+          <a class="project-link" href="https://github.com/MateusSantos590/Controle-de-senhas" target="_blank" rel="noopener">ver repositório →</a>
+        </div>
+        <div class="result-card">
+          <div class="r-label">status</div>
+          <div class="bar-row"><span style="width:88px">criptografia</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">✓</span></div>
+          <div class="bar-row"><span style="width:88px">cli própria</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">✓</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" style="border-bottom: none;">
+    <div class="contact-panel">
+      <div>
+        <h2>Vamos conversar?</h2>
+        <div class="endpoint"><span class="method">POST</span> /contato — resposta em até 24h</div>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:mateussantos147854@gmail.com">email <span class="arrow">↗</span></a>
+        <a href="https://www.linkedin.com/in/mateus-santos-telles-0526ba302/" target="_blank" rel="noopener">linkedin <span class="arrow">↗</span></a>
+        <a href="https://github.com/MateusSantos590" target="_blank" rel="noopener">github <span class="arrow">↗</span></a>
+        <a href="https://instagram.com/mateus360_santos" target="_blank" rel="noopener">instagram <span class="arrow">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Mateus Santos Telles</span>
+    <span>São Paulo, Brasil</span>
+  </footer>
+</div>
+
+<script>
+  // nav shadow on scroll
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', scrollY > 8);
+  }, { passive: true });
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.remove('pending');
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // typing terminal
+  const lines = [
+    { text: 'SELECT nome, papel FROM perfil;', cls: 'kw-line' },
+    { text: '&gt; Mateus Santos Telles', cls: 'out' },
+    { text: '&gt; Analista de Dados em Formação', cls: 'out' },
+    { text: '', cls: 'gap' },
+    { text: 'stack = [<span class="str">"python"</span>, <span class="str">"sql"</span>, <span class="str">"power bi"</span>]', cls: 'code' },
+    { text: 'status = <span class="str">"buscando estágio"</span>', cls: 'code' },
+  ];
+  const target = document.getElementById('typeTarget');
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderStatic() {
+    target.innerHTML = lines.map(l => `<div>${l.text || '&nbsp;'}</div>`).join('') + '<span class="caret"></span>';
+  }
+
+  async function typeLines() {
+    for (const line of lines) {
+      const row = document.createElement('div');
+      target.appendChild(row);
+      if (!line.text) { row.innerHTML = '&nbsp;'; continue; }
+      const raw = line.text;
+      let i = 0;
+      let buffer = '';
+      while (i < raw.length) {
+        if (raw[i] === '<') {
+          const close = raw.indexOf('>', i);
+          buffer += raw.slice(i, close + 1);
+          i = close + 1;
+        } else {
+          buffer += raw[i];
+          i++;
+          await new Promise(r => setTimeout(r, 14));
+        }
+        row.innerHTML = buffer;
+      }
+      await new Promise(r => setTimeout(r, 120));
+    }
+    const caret = document.createElement('span');
+    caret.className = 'caret';
+    target.appendChild(caret);
+  }
+
+  if (prefersReduced) {
+    renderStatic();
+  } else {
+    typeLines();
+  }
+</script>
+</body>
+</html>
