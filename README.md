@@ -6,7 +6,7 @@ Versão em inglês: `https://mateussantos590.github.io/?lang=en`
 
 ## Como completar o site
 - **Currículo:** `curriculo.pdf` é a versão pública, sem telefone. Para atualizar, substitua o arquivo mantendo o nome.
-- **Foto:** envie `foto.jpg` (retrato 4:5) para a raiz. Ela substitui o monograma na seção Sobre.
+- **Foto:** `foto.jpg` (880x1100, 4:5, sem metadados). Para trocar, substitua o arquivo mantendo o nome e a proporção.
 - **Textos em inglês:** ficam no objeto `EN` dentro do `<script>` no fim do `index.html`.
 
 ## Segurança
