@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-A873iNzMgJqLYmt3h0l7Z8Y3zOSiJty5VMjW1jSpRN0='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-iqQj3CEr5UraVIPJJE3RF4ncDw75GCd28mGW5HuX2MM='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
@@ -219,10 +219,50 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
 .footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:28px 0 36px;border-top:1px solid var(--line);color:var(--muted);font-size:15px}
 .footer a{display:inline-flex;align-items:center;min-height:44px}
 
+/* Certificados */
+.tl-link{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:4px;font-weight:500;font-size:15px}
+.tl-link svg{width:16px;height:16px}
+.cert-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 24px;margin-bottom:24px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--muted);font:500 15px var(--font-sans);cursor:pointer;transition:border-color .2s,background-color .2s,color .2s}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.chip-n{font:500 12px var(--font-mono);opacity:.7}
+.chip-n:empty{display:none}
+.cert-sum{color:var(--muted);font:400 14px/1.5 var(--font-mono)}
+.certs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.cert{padding:24px}
+.cert h3{font-size:20px;line-height:1.3}
+.cert-desc{color:var(--muted);font-size:16px}
+.cert-verify{position:relative;z-index:2;display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:500;font-size:15px}
+.cert-verify svg{width:16px;height:16px}
+.cert-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding-top:14px;border-top:1px solid var(--line)}
+.cert-h{color:var(--muted);font:400 14px var(--font-mono)}
+.certs-js .cert-desc,.certs-js .cert-verify{display:none}
+.certs-js .cert .tags li:nth-child(n+4){display:none}
+.modal{width:min(680px,calc(100% - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;overflow:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);box-shadow:0 24px 64px -24px rgba(0,0,0,.5)}
+.modal::backdrop{background:rgba(17,17,19,.6)}
+html:has(.modal[open]){overflow:hidden}
+.modal-box{padding:clamp(24px,4vw,40px)}
+.modal-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
+.modal-kicker{color:var(--accent);font:500 14px var(--font-mono)}
+.modal-title{font-size:clamp(24px,3vw,32px);line-height:1.2;letter-spacing:-.02em;font-weight:500;text-wrap:balance}
+.modal-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:28px 0;border-block:1px solid var(--line)}
+.modal-facts>div{padding:14px 16px 14px 0}
+.modal-facts>div+div{padding-left:16px;border-left:1px solid var(--line)}
+.modal-facts dt{color:var(--muted);font:400 13px/1.6 var(--font-mono)}
+.modal-facts dd{font-weight:500;font-size:16px}
+.modal h4{margin:0 0 10px;color:var(--muted);font:500 14px var(--font-mono)}
+.modal-desc{font-size:17px}
+.modal-sec+.modal-sec{margin-top:28px}
+.modal .tags{margin:0;padding:0}
+.modal-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:32px;padding-top:24px;border-top:1px dashed var(--line-strong)}
+.modal-note{flex-basis:100%;color:var(--muted);font-size:14px}
+
 /* Responsivo */
 @media (max-width:960px){
   .hero-grid,.method,.about,.journey,.contact,.card-feat{grid-template-columns:minmax(0,1fr)}
-  .projects{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .projects,.certs{grid-template-columns:repeat(2,minmax(0,1fr))}
   .section-head{grid-template-columns:minmax(0,1fr);align-items:start}
   .photo{max-width:360px;aspect-ratio:1/1}
   .ticket{max-width:560px}
@@ -238,13 +278,22 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   .links{order:3;justify-content:space-between;width:calc(100% + 16px);margin:0 -8px}
   .links a{padding:0 8px}
   .links a::after{left:8px;right:8px}
-  .projects{grid-template-columns:minmax(0,1fr)}
+  .links{overflow-x:auto;scrollbar-width:none}
+  .links::-webkit-scrollbar{display:none}
+  .projects,.certs{grid-template-columns:minmax(0,1fr)}
+  .modal-facts{grid-template-columns:minmax(0,1fr)}
+  .modal-facts>div{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding:12px 0}
+  .modal-facts>div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .card{padding:24px}
   .timeline li,.ticket dl>div{grid-template-columns:minmax(0,1fr);gap:2px}
   .flow li{grid-template-columns:minmax(0,1fr);gap:2px}
   .step p{padding-left:0}
   .row{flex-wrap:wrap;gap:0 12px;padding-bottom:12px}
   .row-link{flex-basis:100%;padding-bottom:6px}
+}
+@media (max-width:420px){
+  .links a{padding:0 5px;font-size:14px}
+  .links a::after{left:5px;right:5px}
 }
 
 /* Movimento */
@@ -265,6 +314,8 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   .motion .reveal:not(.in){opacity:0;transform:translateY(24px)}
   .motion .reveal.in{animation:rise .9s var(--ease) var(--d,0ms) backwards}
   .panel-body.swap{animation:fade .5s var(--ease)}
+  .modal[open]{animation:rise .5s var(--ease)}
+  .modal[open]::backdrop{animation:show .3s backwards;opacity:0;animation-fill-mode:forwards}
   @media (hover:hover) and (pointer:fine){
     .card:hover{transform:translateY(-2px)}
     .card-feat:hover .flow li{transform:translateX(6px)}
@@ -288,6 +339,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
       <a href="#projetos" data-i18n="nav.projects">Projetos</a>
       <a href="#metodo" data-i18n="nav.method">Método</a>
       <a href="#sobre" data-i18n="nav.about">Sobre</a>
+      <a href="#certificados" data-i18n="nav.certs">Certificados</a>
       <a href="#contato" data-i18n="nav.contact">Contato</a>
     </div>
     <div class="tools">
@@ -425,7 +477,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
           <li><span class="when" data-i18n="j1.when">Ago 2025 até hoje</span><div><h4 data-i18n="j1.t">Freelancer na NexaData Insights</h4><p data-i18n="j1.p">Atendo cinco pequenos negócios: identifico necessidades, explico soluções em linguagem acessível e acompanho as demandas nos prazos combinados.</p></div></li>
           <li><span class="when" data-i18n="j3.when">Mar a jul 2026</span><div><h4 data-i18n="j3.t">Suporte de TI na IZATEC</h4><p data-i18n="j3.p">Suporte a alunos em uma plataforma de aulas de programação e criação de conteúdos sobre Java e Python.</p></div></li>
           <li><span class="when" data-i18n="j2.when">2025 a 2027</span><div><h4 data-i18n="j2.t">Análise e Desenvolvimento de Sistemas, UNG</h4><p data-i18n="j2.p">Tecnólogo EAD, cursando, com conclusão prevista para 2027.</p></div></li>
-          <li><span class="when">2026</span><div><h4 data-i18n="j4.t">Cursos complementares</h4><p data-i18n="j4.p">Mais de 150 horas de cursos de tecnologia na Alura, FIAP e Anthropic Academy, incluindo Git e GitHub.</p></div></li>
+          <li><span class="when">2026</span><div><h4 data-i18n="j4.t">Cursos complementares</h4><p data-i18n="j4.p">Mais de 150 horas de cursos de tecnologia na Alura, FIAP e Anthropic Academy, incluindo Git e GitHub.</p><a class="tl-link" href="#certificados"><span data-i18n="j4.link">Ver certificados</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div></li>
         </ol>
       </div>
       <div class="reveal" style="--d:80ms">
@@ -439,6 +491,64 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
           <div class="skill"><h4 data-i18n="s6.t">Idioma</h4><ul class="tags" data-i18n="s6.tags"><li>Inglês intermediário (B1)</li></ul></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="certificados" class="section wrap" aria-labelledby="certificados-title">
+    <div class="section-head reveal">
+      <h2 id="certificados-title" data-i18n="c.title">Certificados e cursos concluídos.</h2>
+      <p data-i18n="c.sub">Cada certificado tem um link oficial de verificação. Selecione um para ver o conteúdo do curso e as competências.</p>
+    </div>
+    <div class="cert-bar reveal">
+      <div class="filters" role="group" aria-label="Filtrar certificados por tema" data-i18n-label="c.filter" hidden>
+        <button class="chip" type="button" data-f="all" aria-pressed="true"><span data-i18n="c.f.all">Todos</span><span class="chip-n"></span></button>
+        <button class="chip" type="button" data-f="python" aria-pressed="false"><span>Python</span><span class="chip-n"></span></button>
+        <button class="chip" type="button" data-f="git" aria-pressed="false"><span data-i18n="c.f.git">Git e GitHub</span><span class="chip-n"></span></button>
+        <button class="chip" type="button" data-f="ia" aria-pressed="false"><span data-i18n="c.f.ia">IA</span><span class="chip-n"></span></button>
+      </div>
+      <p class="cert-sum" id="cert-sum" aria-live="polite">5 certificados · 38 horas · todos verificáveis online</p>
+    </div>
+    <div class="certs">
+      <article class="card cert reveal" id="cert-python-condicionais" data-topics="python" data-hours="2" data-platform="Alura">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-10">10 fev 2026</time></p>
+        <h3><a href="#cert-python-condicionais">Praticando Python: condicionais if, elif e else</a></h3>
+        <p class="cert-desc" data-i18n="c1.d">Curso prático, baseado em exercícios. Revisei a estrutura de decisão do Python e resolvi problemas em que o programa precisa escolher entre vários caminhos com if, elif e else.</p>
+        <ul class="tags" data-i18n="c1.s"><li>Estruturas condicionais</li><li>Lógica de programação</li><li>Python</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/f481ab0b-d1ef-4ce9-aebf-4af77cf9a9c1" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">2 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-git-versao" data-topics="git" data-hours="8" data-platform="Alura" style="--d:80ms">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
+        <h3><a href="#cert-git-versao">Git e GitHub: dominando controle de versão de código</a></h3>
+        <p class="cert-desc" data-i18n="c2.d">Vai além dos comandos básicos do Git. Aprendi a ler o histórico com os parâmetros do git log, comparar alterações, separar o trabalho em branches e juntá-lo de volta com merge ou rebase. Também estudei a relação entre working tree e staging area e como publicar versões com tags e releases no GitHub.</p>
+        <ul class="tags" data-i18n="c2.s"><li>Branches</li><li>Merge e rebase</li><li>Histórico com git log</li><li>Staging area</li><li>Tags e releases</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/8ee76ff7-894a-4334-9e6b-2cb49d8ec914" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-git-colaboracao" data-topics="git" data-hours="8" data-platform="Alura" style="--d:160ms">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
+        <h3><a href="#cert-git-colaboracao">Git e GitHub: compartilhando e colaborando em projetos</a></h3>
+        <p class="cert-desc" data-i18n="c3.d">Começa do zero: instalar o Git, criar um repositório no GitHub e manter as cópias local e remota sincronizadas. Depois vem o trabalho em equipe, com resolução de conflitos, uso do Git dentro da IDE e correções no histórico de commits. É o fluxo que uso para publicar meus projetos, incluindo este site.</p>
+        <ul class="tags" data-i18n="c3.s"><li>Git</li><li>GitHub</li><li>Resolução de conflitos</li><li>Repositórios remotos</li><li>Histórico de commits</li><li>Git na IDE</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/d77ce05d-a9cf-4ef1-b93f-2cf09f645cd1" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-python-ia" data-topics="python ia" data-hours="12" data-platform="Alura">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
+        <h3><a href="#cert-python-ia">Python: Inteligência Artificial Aplicada</a></h3>
+        <p class="cert-desc" data-i18n="c4.d">Curso de Python com foco prático, feito no Google Colab. Cobre variáveis, strings, condicionais, laços, funções, listas e dicionários, e depois análise de dados com Pandas. Na parte de IA, mostra como conectar um programa Python a uma API de inteligência artificial.</p>
+        <ul class="tags" data-i18n="c4.s"><li>Python</li><li>Pandas</li><li>APIs de IA</li><li>Google Colab</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/661c6918-eaaa-4d60-98b6-b59802ab5745" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">12 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-python-primeira-app" data-topics="python" data-hours="8" data-platform="Alura" style="--d:80ms">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-07">7 fev 2026</time></p>
+        <h3><a href="#cert-python-primeira-app">Python: crie a sua primeira aplicação</a></h3>
+        <p class="cert-desc" data-i18n="c5.d">Meu primeiro contato com Python, construindo um programa completo no VS Code: um sistema de cadastro de restaurantes com menu no terminal. Nele usei strings, funções, listas, dicionários, laços de repetição e tratamento de erros com try/except.</p>
+        <ul class="tags" data-i18n="c5.s"><li>Python</li><li>Funções</li><li>Listas e dicionários</li><li>Tratamento de exceções</li><li>VS Code</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/301eeae9-1c25-4820-8ed2-698893ca8d50" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
     </div>
   </section>
 
@@ -465,6 +575,27 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   <a href="#inicio" data-i18n="f.top">Voltar ao topo</a>
 </footer>
 <div class="toast" role="status" aria-live="polite"></div>
+<dialog class="modal" id="cert-modal" aria-labelledby="cm-title">
+  <div class="modal-box">
+    <div class="modal-top">
+      <p class="modal-kicker" data-i18n="c.kicker">Certificado de conclusão</p>
+      <button class="tool modal-x" type="button" aria-label="Fechar" data-i18n-label="c.close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <h3 class="modal-title" id="cm-title"></h3>
+    <dl class="modal-facts">
+      <div><dt data-i18n="c.plat">Plataforma</dt><dd id="cm-plat"></dd></div>
+      <div><dt data-i18n="c.date">Data de conclusão</dt><dd id="cm-date"></dd></div>
+      <div><dt data-i18n="c.load">Carga horária</dt><dd id="cm-hours"></dd></div>
+    </dl>
+    <div class="modal-sec"><h4 data-i18n="c.desc">Descrição</h4><p class="modal-desc" id="cm-desc"></p></div>
+    <div class="modal-sec"><h4 data-i18n="c.skills">Competências</h4><ul class="tags" id="cm-skills"></ul></div>
+    <div class="modal-foot">
+      <a class="btn btn-primary" id="cm-verify" href="#" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <button class="copy" id="cm-copy" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="cm-copy-t" data-i18n="c.copy">Copiar link</span></button>
+      <p class="modal-note" data-i18n="c.note">A verificação abre a página oficial do certificado, sem precisar de login.</p>
+    </div>
+  </div>
+</dialog>
 
 <script>
 (() => {
@@ -499,7 +630,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
     'meta.desc': 'Portfolio of Mateus Santos Telles: IT support, data analysis and Python projects. Systems Analysis student in São Paulo, open to internship and junior roles.',
     'skip': 'Skip to content',
     'a.nav': 'Main', 'a.lang': 'Switch language to Portuguese', 'a.theme': 'Dark theme',
-    'nav.projects': 'Projects', 'nav.method': 'Method', 'nav.about': 'About', 'nav.contact': 'Contact',
+    'nav.projects': 'Projects', 'nav.method': 'Method', 'nav.about': 'About', 'nav.certs': 'Certificates', 'nav.contact': 'Contact',
     'hero.status': 'Open to internship and junior roles in São Paulo',
     'hero.title': 'IT support with a data mindset.',
     'hero.lede': 'I’m Mateus, a Systems Analysis student who solves problems and documents every fix.',
@@ -541,17 +672,40 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
     'j3.when': 'Mar to Jul 2026', 'j3.t': 'IT support at IZATEC',
     'j3.p': 'Supported students on a programming course platform and created learning content on Java and Python.',
     'j4.t': 'Additional courses', 'j4.p': 'Over 150 hours of technology courses at Alura, FIAP and Anthropic Academy, including Git and GitHub.',
+    'j4.link': 'See certificates',
     'j2.when': '2025 to 2027', 'j2.t': 'Systems Analysis and Development, UNG', 'j2.p': 'Online technology degree, in progress, expected to graduate in 2027.',
     's1.t': 'Support and hardware', 's1.tags': '<li>Windows 10/11</li><li>OS installation</li><li>PC assembly</li><li>Hardware diagnosis</li><li>Drivers and printers</li><li>User support</li><li>Documentation</li>',
     's4.t': 'Networking', 's4.tags': '<li>TCP/IP</li><li>DNS</li><li>DHCP</li><li>Home networks</li>',
     's5.t': 'Tools', 's6.t': 'Language', 's6.tags': '<li>English, intermediate (B1)</li>',
     's2.t': 'Data and BI', 's3.t': 'Development and automation', 's3.tags': '<li>Python</li><li>n8n</li><li>Programming logic</li><li>Git</li><li>GitHub</li>',
+    'c.title': 'Certificates and completed courses.',
+    'c.sub': 'Every certificate has an official verification link. Select one to see what the course covered and the skills involved.',
+    'c.filter': 'Filter certificates by topic', 'c.f.all': 'All', 'c.f.git': 'Git and GitHub', 'c.f.ia': 'AI',
+    'c.more': 'View details', 'c.verify': 'Verify credential', 'c.kicker': 'Certificate of completion', 'c.close': 'Close',
+    'c.plat': 'Platform', 'c.date': 'Completion date', 'c.load': 'Course hours', 'c.desc': 'Description', 'c.skills': 'Skills',
+    'c.copy': 'Copy link', 'c.note': 'Verification opens the official certificate page. No login required.',
+    'c.sum': '{n} certificates · {h} hours · all verifiable online', 'c.sumf': '{n} of {t} certificates · {h} hours',
+    'c.hrs': '{h} hours', 'c.copied': 'Link copied', 'c.copyfail': 'Couldn’t copy',
+    'c1.d': 'A hands-on, exercise-based course. I reviewed how Python makes decisions and solved problems where the program has to choose between several paths with if, elif and else.',
+    'c1.s': '<li>Conditional statements</li><li>Programming logic</li><li>Python</li>',
+    'c2.d': 'Goes beyond the basic Git commands. I learned to read history with git log options, compare changes, split work into branches and bring it back together with merge or rebase. I also studied how the working tree relates to the staging area, and how to publish versions with tags and releases on GitHub.',
+    'c2.s': '<li>Branches</li><li>Merge and rebase</li><li>History with git log</li><li>Staging area</li><li>Tags and releases</li>',
+    'c3.d': 'Starts from scratch: installing Git, creating a GitHub repository and keeping the local and remote copies in sync. Then comes teamwork, with conflict resolution, Git inside the IDE and fixes to the commit history. It’s the workflow I use to publish my projects, this site included.',
+    'c3.s': '<li>Git</li><li>GitHub</li><li>Conflict resolution</li><li>Remote repositories</li><li>Commit history</li><li>Git in the IDE</li>',
+    'c4.d': 'A practical Python course run in Google Colab. It covers variables, strings, conditionals, loops, functions, lists and dictionaries, then data analysis with Pandas. The AI part shows how to connect a Python program to an artificial intelligence API.',
+    'c4.s': '<li>Python</li><li>Pandas</li><li>AI APIs</li><li>Google Colab</li>',
+    'c5.d': 'My first contact with Python, building a complete program in VS Code: a restaurant registration system with a terminal menu. It used strings, functions, lists, dictionaries, loops and error handling with try/except.',
+    'c5.s': '<li>Python</li><li>Functions</li><li>Lists and dictionaries</li><li>Exception handling</li><li>VS Code</li>',
     'ct.title': 'Let’s talk.', 'ct.sub': 'Have an internship or junior role in IT support or data? I’d love to hear about it.',
     'ct.copy': 'Copy email', 'ct.li': 'Professional profile', 'ct.gh': 'Code and projects',
     'f.top': 'Back to top',
     'toast.ok': 'Email copied', 'toast.fail': 'Couldn’t copy. Use the email link instead.'
   };
-  const PT = { 'toast.ok': 'E-mail copiado', 'toast.fail': 'Não foi possível copiar. Use o link de e-mail.' };
+  const PT = {
+    'toast.ok': 'E-mail copiado', 'toast.fail': 'Não foi possível copiar. Use o link de e-mail.',
+    'c.sum': '{n} certificados · {h} horas · todos verificáveis online', 'c.sumf': '{n} de {t} certificados · {h} horas',
+    'c.hrs': '{h} horas', 'c.copied': 'Link copiado', 'c.copyfail': 'Não foi possível copiar'
+  };
   const textNodes = $$('[data-i18n]');
   const labelNodes = $$('[data-i18n-label]');
   const metaDesc = $('meta[name="description"]');
@@ -633,6 +787,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
     if (save) store.set('lang', lang);
     splitTitle();
     renderPanel(false);
+    renderCerts();
     tick();
   }
   $('#lang').addEventListener('click', () => setLang(lang === 'en' ? 'pt' : 'en', true));
@@ -751,10 +906,113 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
       .catch(() => {});
   }
 
+  /* ---------- Certificados ---------- */
+  /* Sem JavaScript (ou sem <dialog>), cada card mostra descrição e link de verificação.
+     Com suporte, o card abre um modal e o endereço ganha o #id do certificado, para compartilhar. */
+  const certs = $$('.cert');
+  const modal = $('#cert-modal');
+  const canModal = typeof modal.showModal === 'function';
+  const certSum = $('#cert-sum');
+  const chips = $$('.chip');
+  const topics = c => c.dataset.topics.split(' ');
+  const hoursOf = c => Number(c.dataset.hours) || 0;
+  const fill = (k, o) => t(k).replace(/\{(\w+)\}/g, (_, x) => o[x]);
+  const fmtDate = (iso, long) => {
+    try {
+      return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'pt-BR', { day: 'numeric', month: long ? 'long' : 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(iso + 'T12:00:00Z'));
+    } catch (e) { return iso; }
+  };
+  let certFilter = 'all', openCert = null;
+
+  function fillModal(c) {
+    $('#cm-title').textContent = $('h3', c).textContent;
+    $('#cm-plat').textContent = c.dataset.platform;
+    $('#cm-date').textContent = fmtDate($('time', c).getAttribute('datetime'), true);
+    $('#cm-hours').textContent = fill('c.hrs', { h: hoursOf(c) });
+    $('#cm-desc').textContent = $('.cert-desc', c).textContent;
+    $('#cm-skills').innerHTML = $('.tags', c).innerHTML;
+    $('#cm-verify').href = $('.cert-verify', c).href;
+  }
+  function renderCerts() {
+    certs.forEach(c => {
+      const time = $('time', c);
+      time.textContent = fmtDate(time.getAttribute('datetime'), false);
+      $('.cert-h', c).textContent = fill('c.hrs', { h: hoursOf(c) });
+    });
+    const shown = certs.filter(c => !c.hidden);
+    const h = shown.reduce((sum, c) => sum + hoursOf(c), 0);
+    certSum.textContent = certFilter === 'all'
+      ? fill('c.sum', { n: certs.length, h })
+      : fill('c.sumf', { n: shown.length, t: certs.length, h });
+    if (openCert) fillModal(openCert);
+  }
+
+  const counts = { all: certs.length };
+  certs.forEach(c => topics(c).forEach(k => { counts[k] = (counts[k] || 0) + 1; }));
+  chips.forEach(b => {
+    const n = counts[b.dataset.f] || 0;
+    if (!n) { b.hidden = true; return; }
+    $('.chip-n', b).textContent = n;
+    b.addEventListener('click', () => {
+      certFilter = b.dataset.f;
+      chips.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      certs.forEach(c => { c.hidden = certFilter !== 'all' && !topics(c).includes(certFilter); });
+      renderCerts();
+    });
+  });
+  $('.filters').hidden = false;
+
+  function openModal(c) {
+    openCert = c;
+    fillModal(c);
+    if (!modal.open) modal.showModal();
+    modal.scrollTop = 0;
+    history.replaceState(null, '', '#' + c.id);
+  }
+  const certFromHash = () => {
+    const c = certs.find(x => '#' + x.id === location.hash);
+    if (c && c !== openCert) openModal(c);
+  };
+  if (canModal) {
+    root.classList.add('certs-js');
+    certs.forEach(c => {
+      const a = $('h3 a', c);
+      a.setAttribute('aria-haspopup', 'dialog');
+      a.addEventListener('click', e => { e.preventDefault(); openModal(c); });
+    });
+    $('.modal-x').addEventListener('click', () => modal.close());
+    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+    modal.addEventListener('close', () => {
+      const c = openCert;
+      openCert = null;
+      history.replaceState(null, '', '#certificados');
+      if (c) $('h3 a', c).focus({ preventScroll: true });
+    });
+    addEventListener('hashchange', certFromHash);
+
+    const linkBtn = $('#cm-copy');
+    if (navigator.clipboard && window.isSecureContext) {
+      linkBtn.hidden = false;
+      let linkTimer;
+      linkBtn.addEventListener('click', async () => {
+        if (!openCert) return;
+        const u = new URL(location.href);
+        u.search = lang === 'en' ? '?lang=en' : '';
+        u.hash = openCert.id;
+        const label = $('.cm-copy-t', linkBtn);
+        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); }
+        catch (e) { label.textContent = t('c.copyfail'); }
+        clearTimeout(linkTimer);
+        linkTimer = setTimeout(() => { label.textContent = t('c.copy'); }, 2000);
+      });
+    }
+  }
+
   /* ---------- Idioma inicial ---------- */
   const q = new URLSearchParams(location.search).get('lang');
   const initial = (q === 'en' || q === 'pt') ? q : (store.get('lang') === 'en' ? 'en' : 'pt');
   setLang(initial, q === 'en' || q === 'pt');
+  if (canModal) certFromHash();
 })();
 </script>
 </body>
