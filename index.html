@@ -2,6 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hwe4C/5NDsSbLS8GfEhcJAdItnh7EUh0mylf59yepUs=' 'sha256-ZxtQRz1laEGQrMwCPZfj+DHj45T6E3Y9g6Go1lAayqw='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
 <meta name="description" content="Portfólio de Mateus Santos Telles: suporte em TI, análise de dados e projetos em Python. Estudante de ADS em São Paulo, disponível para estágio e júnior.">
@@ -403,7 +405,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
       <!-- Foto: envie o arquivo foto.jpg (retrato, 4:5) para a raiz do repositório. Sem o arquivo, aparece o monograma. -->
       <figure class="photo reveal">
         <span class="photo-fallback" aria-hidden="true">mt</span>
-        <img src="foto.jpg" alt="Mateus Telles" width="800" height="1000" loading="lazy" onerror="this.remove()">
+        <img src="foto.jpg" alt="Mateus Telles" width="800" height="1000" loading="lazy">
       </figure>
       <div class="about-text reveal" style="--d:80ms">
         <h2 id="sobre-title" data-i18n="a.title">Movido pela vontade de aprender.</h2>
@@ -480,6 +482,8 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
     set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} }
   };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const photo = $('.photo img');
+  if (photo) { photo.addEventListener('error', () => photo.remove()); if (photo.complete && !photo.naturalWidth) photo.remove(); }
 
   /* ---------- Idiomas ---------- */
   const EN = {
