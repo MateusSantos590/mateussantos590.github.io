@@ -5,7 +5,7 @@ Site estático em um único `index.html` (sem build), publicado pelo GitHub Page
 Versão em inglês: `https://mateussantos590.github.io/?lang=en`
 
 ## Como completar o site
-- **Currículo:** envie `curriculo.pdf` para a raiz. O botão "Baixar currículo" aparece sozinho.
+- **Currículo:** `curriculo.pdf` é a versão pública, sem telefone. Para atualizar, substitua o arquivo mantendo o nome.
 - **Foto:** envie `foto.jpg` (retrato 4:5) para a raiz. Ela substitui o monograma na seção Sobre.
 - **Textos em inglês:** ficam no objeto `EN` dentro do `<script>` no fim do `index.html`.
 
