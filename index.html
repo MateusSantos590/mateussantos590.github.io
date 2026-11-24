@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hwe4C/5NDsSbLS8GfEhcJAdItnh7EUh0mylf59yepUs=' 'sha256-ULRUi24i3Rkpv8fTr/2rsynmvUEa89NtmkNzs/O+bfg='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-IlNkrB5HBFgy7XucCemS4X83DRb+nHaXkmBcZc6EJm0='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
@@ -21,16 +21,19 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2318181b'/%3E%3Crect x='14' y='40' width='36' height='6' rx='3' fill='%23fb923c'/%3E%3Ctext x='32' y='34' text-anchor='middle' font-family='monospace' font-weight='700' font-size='22' fill='%23fafaf9'%3Emt%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script>(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})();</script>
+<link rel="preload" href="fonts/ibm-plex-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')d.dataset.theme=t}catch(e){}var c=navigator.connection,m=navigator.deviceMemory,h=navigator.hardwareConcurrency;if((c&&c.saveData)||(m&&m<=2)||(h&&h<=2))d.classList.add('lite')})();</script>
 <style>
 /* Decisões de design
    Tema: técnico e minimalista, inspirado numa ficha de atendimento. Papel claro, tinta quase preta e um único laranja de sinalização.
    Tipografia: IBM Plex Sans (texto e títulos) + IBM Plex Mono (dados, números e rótulos curtos).
    Assinatura: ficha de resumo no topo e o método de atendimento interativo em cinco passos.
-   Movimento: só transform e opacity; título entra palavra por palavra; blocos revelam ao rolar. Tudo visível sem JavaScript. */
+   Movimento: só transform e opacity; título entra palavra por palavra; blocos revelam ao rolar. Tudo visível sem JavaScript.
+   Desempenho: fontes locais; efeitos contínuos só com transform (camada na GPU); escritas de JS no máximo uma por quadro, até 60 fps;
+   modo .lite (aparelho fraco, economia de dados ou quadros lentos medidos) desliga desfoque, brilho dos cards e título por palavra. */
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/ibm-plex-sans-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/ibm-plex-mono-400-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-500-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 :root{
   --bg:#fafaf9;--surface:#ffffff;--ink:#18181b;--muted:#57575f;--line:#e4e4e1;--line-strong:#cfcfca;
   --accent:#c2410c;--accent-soft:#fdeee4;--on-ink:#fafaf9;--spot:rgba(194,65,12,.09);
@@ -71,7 +74,8 @@ svg{flex:none}
 .progress{position:fixed;inset:0 0 auto;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;z-index:30;pointer-events:none}
 
 /* Cabeçalho */
-.header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 97%,transparent);border-bottom:1px solid var(--line)}
+@media (hover:hover) and (pointer:fine){html:not(.lite) .header{background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px)}}
 .nav{display:flex;align-items:center;gap:16px;min-height:68px}
 .brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-right:auto;font-weight:600;text-decoration:none;letter-spacing:-.01em}
 .brand-mark{display:grid;place-items:center;width:30px;height:30px;border-radius:7px;background:var(--ink);color:var(--on-ink);font:500 13px var(--font-mono)}
@@ -101,13 +105,15 @@ h1{min-width:0;font-size:clamp(44px,6.6vw,92px);line-height:1.02;letter-spacing:
 .btn-primary{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
 .btn-primary:hover{background:color-mix(in srgb,var(--ink) 85%,var(--bg))}
 .btn-primary:hover svg{transform:translateY(2px)}
-.ticket{padding:4px 24px 12px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.ticket{contain:layout paint;padding:4px 24px 12px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
 .ticket-head{padding:16px 0;border-bottom:1px dashed var(--line-strong);color:var(--muted);font:500 14px var(--font-mono)}
 .ticket dl>div{display:grid;grid-template-columns:minmax(0,8.5em) minmax(0,1fr);gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
 .ticket dl>div:last-child{border-bottom:0}
 .ticket dt{color:var(--muted);font:400 14px/1.7 var(--font-mono)}
 .ticket dd{font-weight:500;font-size:16px}
 .ticket .hl{color:var(--accent)}
+#clock-row{display:none}
+.js #clock-row{display:grid}
 
 /* Seções */
 .section{padding:clamp(72px,10vw,128px) 0;border-top:1px solid var(--line)}
@@ -117,10 +123,11 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
 
 /* Projetos */
 .projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.card{position:relative;isolation:isolate;display:flex;flex-direction:column;gap:14px;padding:28px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);transition:transform .45s var(--ease),border-color .25s,box-shadow .45s var(--ease)}
-.card::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(480px circle at var(--x,50%) var(--y,0%),var(--spot),transparent 60%);opacity:0;transition:opacity .35s}
-.card:hover{border-color:var(--line-strong);box-shadow:var(--shadow)}
-.card:hover::before{opacity:1}
+.card{position:relative;isolation:isolate;display:flex;flex-direction:column;gap:14px;padding:28px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);contain:layout paint;transition:transform .45s var(--ease),border-color .25s}
+.spot{position:absolute;left:0;top:0;z-index:-1;width:600px;height:600px;margin:-300px 0 0 -300px;border-radius:50%;background:radial-gradient(closest-side,var(--spot),transparent);opacity:0;pointer-events:none;will-change:transform;transition:opacity .35s}
+.card:hover{border-color:var(--line-strong)}
+.card:hover .spot{opacity:1}
+.lite .spot{display:none}
 .card:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:3px}
 .card h3 a:focus-visible{outline:0}
 .card-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font:500 14px var(--font-mono)}
@@ -244,12 +251,16 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
 @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes word{from{opacity:0;transform:translateY(.45em)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes show{to{opacity:1}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
   .hero .status,.hero .lede,.hero .actions,.ticket{animation:rise .9s var(--ease) backwards}
   .hero .lede{animation-delay:.45s}
   .hero .actions{animation-delay:.55s}
   .ticket{animation-delay:.7s}
+  .js h1:not(.split){opacity:0;animation:show 0s 1.2s forwards}
+  @supports (animation-timeline:scroll()){.progress{animation:grow linear both;animation-timeline:scroll(root)}}
   h1.split .w{display:inline-block;animation:word .8s var(--ease) backwards;animation-delay:calc(var(--i) * 70ms + 120ms)}
   .motion .reveal:not(.in){opacity:0;transform:translateY(24px)}
   .motion .reveal.in{animation:rise .9s var(--ease) var(--d,0ms) backwards}
@@ -308,7 +319,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
           <div><dt data-i18n="t.seek">Busco</dt><dd data-i18n="t.seekv">Estágio ou júnior</dd></div>
           <div><dt data-i18n="t.loc">Local</dt><dd data-i18n="t.locv">São Paulo, SP</dd></div>
           <div><dt data-i18n="t.edu">Formação</dt><dd data-i18n="t.eduv">ADS na UNG, conclusão em 2027</dd></div>
-          <div id="clock-row" hidden><dt data-i18n="t.time">Horário em SP</dt><dd id="clock"></dd></div>
+          <div id="clock-row"><dt data-i18n="t.time">Horário em SP</dt><dd id="clock"></dd></div>
         </dl>
       </aside>
     </div>
@@ -395,7 +406,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
       <!-- Foto: envie o arquivo foto.jpg (retrato, 4:5) para a raiz do repositório. Sem o arquivo, aparece o monograma. -->
       <figure class="photo reveal">
         <span class="photo-fallback" aria-hidden="true">mt</span>
-        <img src="foto.jpg" alt="Mateus Telles" width="800" height="1000" loading="lazy">
+        <img src="foto.jpg" alt="Mateus Telles" width="800" height="1000" loading="lazy" decoding="async">
       </figure>
       <div class="about-text reveal" style="--d:80ms">
         <h2 id="sobre-title" data-i18n="a.title">Movido pela vontade de aprender.</h2>
@@ -456,6 +467,19 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
 (() => {
   const root = document.documentElement;
   root.classList.add('js');
+  const isLite = () => root.classList.contains('lite');
+
+  /* Agendador: junta eventos e faz no máximo uma escrita visual por quadro, limitada a ~60 fps.
+     Em telas de 60 Hz roda em todo quadro; em 90/120 Hz pula quadros e economiza bateria. */
+  const MIN_FRAME = 1000 / 60 - 1;
+  const frameTask = fn => {
+    let queued = false, last = 0;
+    const run = now => {
+      if (now - last < MIN_FRAME) { requestAnimationFrame(run); return; }
+      last = now; queued = false; fn();
+    };
+    return () => { if (!queued) { queued = true; requestAnimationFrame(run); } };
+  };
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const store = {
@@ -533,7 +557,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   /* ---------- Título palavra por palavra ---------- */
   const h1 = $('h1');
   function splitTitle() {
-    if (reduce.matches) return;
+    if (reduce.matches || isLite()) { h1.classList.add('split'); return; }
     let i = 0;
     const walk = node => {
       [...node.childNodes].forEach(c => {
@@ -585,10 +609,10 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   function tick() {
     try {
       clock.textContent = new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }).format(new Date());
-      $('#clock-row').hidden = false;
-    } catch (e) {}
+    } catch (e) { $('#clock-row').style.display = 'none'; }
   }
-  setInterval(tick, 30000);
+  setInterval(() => { if (!document.hidden) tick(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
 
   function setLang(next, save) {
     lang = next === 'en' ? 'en' : 'pt';
@@ -619,20 +643,19 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   syncTheme();
 
   /* ---------- Barra de progresso ---------- */
+  /* Onde há suporte, a barra roda só em CSS (animation-timeline), fora da thread principal. */
   const bar = $('.progress');
-  let ticking = false;
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const h = root.scrollHeight - innerHeight;
-      bar.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`;
-      ticking = false;
-    });
-  };
-  addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', onScroll);
-  onScroll();
+  const cssProgress = !reduce.matches && window.CSS && CSS.supports('animation-timeline: scroll()');
+  if (!cssProgress) {
+    let maxScroll = 1;
+    const measure = () => { maxScroll = Math.max(1, root.scrollHeight - innerHeight); };
+    const paintBar = frameTask(() => { bar.style.transform = `scaleX(${Math.min(1, scrollY / maxScroll)})`; });
+    measure();
+    if ('ResizeObserver' in window) new ResizeObserver(() => { measure(); paintBar(); }).observe(document.body);
+    addEventListener('resize', () => { measure(); paintBar(); }, { passive: true });
+    addEventListener('scroll', paintBar, { passive: true });
+    paintBar();
+  }
 
   if ('IntersectionObserver' in window) {
     /* Menu destaca a seção atual */
@@ -657,12 +680,41 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
   }
 
   /* ---------- Luz que segue o mouse nos cards ---------- */
+  /* Só transform num elemento próprio: sem layout nem repintura a cada movimento. */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    $$('.card').forEach(c => c.addEventListener('pointermove', e => {
-      const r = c.getBoundingClientRect();
-      c.style.setProperty('--x', `${e.clientX - r.left}px`);
-      c.style.setProperty('--y', `${e.clientY - r.top}px`);
-    }));
+    let card = null, spot = null, px = 0, py = 0;
+    const paintSpot = frameTask(() => {
+      if (!card || isLite()) return;
+      const r = card.getBoundingClientRect();
+      spot.style.transform = `translate3d(${px - r.left}px,${py - r.top}px,0)`;
+    });
+    $$('.card').forEach(c => {
+      const s = document.createElement('span');
+      s.className = 'spot';
+      s.setAttribute('aria-hidden', 'true');
+      c.prepend(s);
+      const follow = e => { card = c; spot = s; px = e.clientX; py = e.clientY; paintSpot(); };
+      c.addEventListener('pointerenter', follow);
+      c.addEventListener('pointermove', follow, { passive: true });
+      c.addEventListener('pointerleave', () => { if (card === c) card = null; });
+    });
+  }
+
+  /* Modo adaptativo: mede os quadros logo após a carga. Se mais de 25% passarem de 28 ms
+     (abaixo de ~36 fps), liga o modo leve e corta os efeitos mais caros. */
+  if (!isLite()) {
+    addEventListener('load', () => {
+      const slow = [];
+      let prev = 0, n = 0;
+      const sample = t => {
+        if (document.hidden) return;
+        if (prev) slow.push(t - prev > 28);
+        prev = t;
+        if (++n < 90) requestAnimationFrame(sample);
+        else if (slow.filter(Boolean).length / slow.length > 0.25) root.classList.add('lite');
+      };
+      requestAnimationFrame(sample);
+    }, { once: true });
   }
 
   /* ---------- Copiar e-mail ---------- */

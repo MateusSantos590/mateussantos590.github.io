@@ -12,3 +12,8 @@ Versão em inglês: `https://mateussantos590.github.io/?lang=en`
 ## Segurança
 O `index.html` tem uma Content-Security-Policy que só permite os scripts inline cujo hash está na política.
 Se editar qualquer `<script>`, recalcule os hashes (sha256 em base64 do conteúdo do script) e atualize `script-src`, senão o script é bloqueado.
+
+## Desempenho
+- Fontes IBM Plex hospedadas em `fonts/` (licença SIL OFL 1.1 em `fonts/OFL.txt`), sem dependência do Google Fonts.
+- Efeitos contínuos usam só `transform`/`opacity`; o JavaScript faz no máximo uma atualização visual por quadro, limitada a 60 fps.
+- Modo leve automático (`html.lite`): ativado em aparelhos com pouca memória/CPU, com economia de dados ligada ou quando a página mede quadros lentos. Desliga o desfoque do menu, o brilho dos cards e a animação do título.
