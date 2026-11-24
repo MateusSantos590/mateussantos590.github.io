@@ -7,6 +7,7 @@ Versão em inglês: `https://mateussantos590.github.io/?lang=en`
 ## Como completar o site
 - **Currículo:** `curriculo.pdf` é a versão pública, sem telefone. Para atualizar, substitua o arquivo mantendo o nome.
 - **Foto:** `foto.jpg` (880x1100, 4:5, sem metadados). Para trocar, substitua o arquivo mantendo o nome e a proporção.
+- **Certificados:** cada um é um `<article class="card cert">` na seção `#certificados`, do mais recente para o mais antigo. Para adicionar um, copie um card existente e troque `id` (vira o link direto, ex.: `#cert-git-versao`), `data-topics` (temas separados por espaço: `python`, `git`, `ia`), `data-hours`, `data-platform`, a data em `<time datetime="AAAA-MM-DD">`, o título, a descrição, as competências e o link de verificação. Use novas chaves `data-i18n` (`c6.d`, `c6.s`) e coloque a tradução no objeto `EN`. O total de certificados e horas e a contagem dos filtros são calculados sozinhos. Para um tema novo, adicione um botão `.chip` com o `data-f` correspondente.
 - **Textos em inglês:** ficam no objeto `EN` dentro do `<script>` no fim do `index.html`.
 
 ## Segurança
