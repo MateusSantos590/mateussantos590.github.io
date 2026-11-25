@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-tbzuNRNZHrB+yTTBDiGdZLbw0lW/bj7O3gNUR6sgstU='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-JpDo0eGuo/3A+55UOPTzhheUkyR0/qvXSISX3O1SK0c='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
@@ -28,7 +28,9 @@
    Tema: técnico e minimalista, inspirado numa ficha de atendimento. Papel claro, tinta quase preta e um único laranja de sinalização.
    Tipografia: IBM Plex Sans (texto e títulos) + IBM Plex Mono (dados, números e rótulos curtos).
    Assinatura: ficha de resumo no topo e o método de atendimento interativo em cinco passos.
-   Movimento: só transform e opacity; título entra palavra por palavra; blocos revelam ao rolar. Tudo visível sem JavaScript.
+   Movimento: só transform, translate, scale e opacity; título entra palavra por palavra; blocos revelam ao rolar e listas entram em cascata.
+   Rolagem: topo com profundidade (texto sobe, ficha desce mais devagar) e foto que assenta, via animation-timeline no CSS, fora da thread principal.
+   Sem efeito contínuo; tudo desligado no modo .lite e com prefers-reduced-motion. Tudo visível sem JavaScript.
    Desempenho: fontes locais; efeitos contínuos só com transform (camada na GPU); escritas de JS no máximo uma por quadro, até 60 fps;
    modo .lite (aparelho fraco, economia de dados ou quadros lentos medidos) desliga desfoque, brilho dos cards e título por palavra. */
 @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/ibm-plex-sans-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
@@ -177,7 +179,7 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
 
 /* Sobre */
 .about{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,6vw,96px);align-items:start}
-.photo{position:relative;display:grid;place-items:center;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:var(--accent-soft)}
+.photo{position:relative;display:grid;place-items:center;aspect-ratio:4/5;overflow:clip;border:1px solid var(--line);border-radius:var(--radius);background:var(--accent-soft)}
 .photo-fallback{color:var(--accent);font:500 clamp(72px,10vw,140px)/1 var(--font-mono);letter-spacing:-.06em}
 .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .about-text h2{margin-bottom:28px}
@@ -345,6 +347,9 @@ html:has(.modal[open]){overflow:hidden}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes show{to{opacity:1}}
 @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes drift-up{to{translate:0 -56px;opacity:.3}}
+@keyframes drift-down{to{translate:0 40px}}
+@keyframes settle{from{scale:1.12}to{scale:1}}
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
   .hero .status,.hero .lede,.hero .actions,.ticket{animation:rise .9s var(--ease) backwards}
@@ -357,6 +362,18 @@ html:has(.modal[open]){overflow:hidden}
   .motion .reveal:not(.in){opacity:0;transform:translateY(24px)}
   .motion .reveal.in{animation:rise .9s var(--ease) var(--d,0ms) backwards}
   .panel-body.swap{animation:fade .5s var(--ease)}
+  .motion .stagger:not(.in)>*{opacity:0;transform:translateY(16px)}
+  .motion .stagger.in>*{animation:rise .75s var(--ease) backwards;animation-delay:calc(var(--i,0) * 70ms + var(--d,0ms))}
+  /* Rolagem: animações ligadas ao scroll, calculadas pelo navegador fora do JavaScript */
+  @supports (animation-timeline:scroll()){
+    html:not(.lite) .hero-grid>div:first-child{animation:drift-up linear both;animation-timeline:scroll(root);animation-range:0 85vh}
+    @media (min-width:961px){
+      html:not(.lite) .ticket{animation:rise .9s var(--ease) .7s backwards,drift-down linear both;animation-timeline:auto,scroll(root);animation-range:normal,0 85vh}
+    }
+  }
+  @supports (animation-timeline:view()){
+    html:not(.lite) .photo img{animation:settle linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
+  }
   .modal[open]{animation:rise .5s var(--ease)}
   .modal[open]::backdrop{animation:show .3s backwards;opacity:0;animation-fill-mode:forwards}
   @media (hover:hover) and (pointer:fine){
@@ -514,18 +531,18 @@ html:has(.modal[open]){overflow:hidden}
       <h2 id="trajetoria-title" data-i18n="j.title">Trajetória e habilidades.</h2>
     </div>
     <div class="journey">
-      <div class="reveal">
-        <h3 class="col" data-i18n="j.exp">Experiência e formação</h3>
-        <ol class="timeline">
+      <div>
+        <h3 class="col reveal" data-i18n="j.exp">Experiência e formação</h3>
+        <ol class="timeline stagger">
           <li><span class="when" data-i18n="j1.when">Ago 2025 até hoje</span><div><h4 data-i18n="j1.t">Freelancer na NexaData Insights</h4><p data-i18n="j1.p">Atendo cinco pequenos negócios: identifico necessidades, explico soluções em linguagem acessível e acompanho as demandas nos prazos combinados.</p></div></li>
           <li><span class="when" data-i18n="j3.when">Mar a jul 2026</span><div><h4 data-i18n="j3.t">Suporte de TI na IZATEC</h4><p data-i18n="j3.p">Suporte a alunos em uma plataforma de aulas de programação e criação de conteúdos sobre Java e Python.</p></div></li>
           <li><span class="when" data-i18n="j2.when">2025 a 2027</span><div><h4 data-i18n="j2.t">Análise e Desenvolvimento de Sistemas, UNG</h4><p data-i18n="j2.p">Tecnólogo EAD, cursando, com conclusão prevista para 2027.</p></div></li>
           <li><span class="when">2026</span><div><h4 data-i18n="j4.t">Cursos complementares</h4><p data-i18n="j4.p">Mais de 150 horas de cursos de tecnologia na FIAP e na Alura, incluindo Git e GitHub.</p><a class="tl-link" href="#certificados"><span data-i18n="j4.link">Ver certificados</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div></li>
         </ol>
       </div>
-      <div class="reveal" style="--d:80ms">
-        <h3 class="col" data-i18n="j.skills">Habilidades</h3>
-        <div class="skills">
+      <div>
+        <h3 class="col reveal" style="--d:80ms" data-i18n="j.skills">Habilidades</h3>
+        <div class="skills stagger" style="--d:120ms">
           <div class="skill"><h4 data-i18n="s1.t">Suporte e microinformática</h4><ul class="tags" data-i18n="s1.tags"><li>Windows 10/11</li><li>Instalação de sistemas</li><li>Montagem de computadores</li><li>Diagnóstico de hardware</li><li>Drivers e impressoras</li><li>Atendimento ao usuário</li><li>Documentação</li></ul></div>
           <div class="skill"><h4 data-i18n="s4.t">Redes</h4><ul class="tags" data-i18n="s4.tags"><li>TCP/IP</li><li>DNS</li><li>DHCP</li><li>Redes domésticas</li></ul></div>
           <div class="skill"><h4 data-i18n="s5.t">Ferramentas</h4><ul class="tags"><li>Microsoft 365</li><li>Pacote Office</li><li>Google Workspace</li></ul></div>
@@ -625,7 +642,7 @@ html:has(.modal[open]){overflow:hidden}
         <h2 id="contato-title" data-i18n="ct.title">Vamos conversar?</h2>
         <p data-i18n="ct.sub">Tem uma vaga de estágio ou júnior em suporte ou dados? Vou gostar de saber mais.</p>
       </div>
-      <div class="contact-list reveal" style="--d:80ms">
+      <div class="contact-list stagger" style="--d:80ms">
         <div class="row">
           <a class="row-link" href="mailto:mateussantos147854@gmail.com"><span><small>E-mail</small><span class="addr">mateussantos147854@gmail.com</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
           <button class="copy" id="copy" type="button" data-email="mateussantos147854@gmail.com" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span data-i18n="ct.copy">Copiar e-mail</span></button>
@@ -915,7 +932,8 @@ html:has(.modal[open]){overflow:hidden}
       const io = new IntersectionObserver(entries => entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-      $$('.reveal').forEach(el => io.observe(el));
+      $$('.stagger').forEach(el => [...el.children].forEach((c, i) => c.style.setProperty('--i', i)));
+      $$('.reveal, .stagger').forEach(el => io.observe(el));
     }
   }
 
