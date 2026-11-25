@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-iqQj3CEr5UraVIPJJE3RF4ncDw75GCd28mGW5HuX2MM='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-tbzuNRNZHrB+yTTBDiGdZLbw0lW/bj7O3gNUR6sgstU='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
@@ -230,7 +230,27 @@ h2{min-width:0;font-size:clamp(34px,4.4vw,58px);line-height:1.06;letter-spacing:
 .chip-n{font:500 12px var(--font-mono);opacity:.7}
 .chip-n:empty{display:none}
 .cert-sum{color:var(--muted);font:400 14px/1.5 var(--font-mono)}
-.certs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.cert-bar{margin-bottom:12px}
+.sort{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px}
+.sort-l{padding:0 8px 0 10px;color:var(--muted);font:400 13px var(--font-mono)}
+.sort button{min-height:36px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:500 14px var(--font-sans);cursor:pointer;transition:background-color .2s,color .2s}
+.sort button:hover{color:var(--ink)}
+.sort button[aria-pressed="true"]{background:var(--accent-soft);color:var(--ink)}
+.cert-sum{margin-bottom:24px}
+.certs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.cert{grid-column:span 2}
+.cert-feat{grid-column:span 3;padding:clamp(24px,3vw,32px);border-color:var(--line-strong)}
+.cert-feat h3{font-size:clamp(22px,2.2vw,28px)}
+.cert .card-meta{flex-wrap:wrap;align-items:center;row-gap:6px}
+.cert .card-meta time{white-space:nowrap}
+.badge{margin-right:auto;margin-left:10px;padding:4px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font:500 12px/1 var(--font-mono)}
+.certs-js .cert-feat .cert-desc{display:block}
+.certs-js .cert-feat .tags li:nth-child(n+4){display:inline-block}
+.cert-key{color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.certs-js .cert-key{display:none}
+code{font:400 .92em var(--font-mono)}
+.key-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.key-row code{padding:10px 12px;border:1px dashed var(--line-strong);border-radius:6px;font-size:14px;letter-spacing:.02em;overflow-wrap:anywhere}
 .cert{padding:24px}
 .cert h3{font-size:20px;line-height:1.3}
 .cert-desc{color:var(--muted);font-size:16px}
@@ -256,13 +276,16 @@ html:has(.modal[open]){overflow:hidden}
 .modal-desc{font-size:17px}
 .modal-sec+.modal-sec{margin-top:28px}
 .modal .tags{margin:0;padding:0}
-.modal-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:32px;padding-top:24px;border-top:1px dashed var(--line-strong)}
-.modal-note{flex-basis:100%;color:var(--muted);font-size:14px}
+.modal-note{margin-top:24px;color:var(--muted);font-size:14px}
+.modal-foot{--pad:clamp(24px,4vw,40px);position:sticky;bottom:0;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin:16px calc(-1 * var(--pad)) calc(-1 * var(--pad));padding:16px var(--pad) max(var(--pad),env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
 
 /* Responsivo */
 @media (max-width:960px){
   .hero-grid,.method,.about,.journey,.contact,.card-feat{grid-template-columns:minmax(0,1fr)}
-  .projects,.certs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .projects{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .certs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cert{grid-column:span 1}
+  .cert-feat{grid-column:1/-1}
   .section-head{grid-template-columns:minmax(0,1fr);align-items:start}
   .photo{max-width:360px;aspect-ratio:1/1}
   .ticket{max-width:560px}
@@ -281,6 +304,7 @@ html:has(.modal[open]){overflow:hidden}
   .links{overflow-x:auto;scrollbar-width:none}
   .links::-webkit-scrollbar{display:none}
   .projects,.certs{grid-template-columns:minmax(0,1fr)}
+  .cert,.cert-feat{grid-column:auto}
   .modal-facts{grid-template-columns:minmax(0,1fr)}
   .modal-facts>div{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding:12px 0}
   .modal-facts>div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
@@ -294,6 +318,25 @@ html:has(.modal[open]){overflow:hidden}
 @media (max-width:420px){
   .links a{padding:0 5px;font-size:14px}
   .links a::after{left:5px;right:5px}
+}
+@media (max-width:359px){
+  .links a{padding:0 3px}
+  .links a::after{left:3px;right:3px}
+}
+@media (pointer:coarse){
+  .sort button{min-height:40px}
+}
+.copy.is-done{border-color:var(--accent);color:var(--accent)}
+@media (max-width:420px){
+  .modal-foot{flex-wrap:nowrap}
+  .modal-foot .btn{flex:1;justify-content:center;padding:0 14px}
+  .modal-foot .btn{gap:8px;white-space:nowrap}
+}
+@media (max-width:359px){
+  .modal-foot .btn{padding:0 12px;font-size:14px}
+  .modal-foot .btn svg{display:none}
+  #cm-copy{flex:none;width:48px;min-height:48px;padding:0;justify-content:center}
+  #cm-copy .cm-copy-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 }
 
 /* Movimento */
@@ -477,7 +520,7 @@ html:has(.modal[open]){overflow:hidden}
           <li><span class="when" data-i18n="j1.when">Ago 2025 até hoje</span><div><h4 data-i18n="j1.t">Freelancer na NexaData Insights</h4><p data-i18n="j1.p">Atendo cinco pequenos negócios: identifico necessidades, explico soluções em linguagem acessível e acompanho as demandas nos prazos combinados.</p></div></li>
           <li><span class="when" data-i18n="j3.when">Mar a jul 2026</span><div><h4 data-i18n="j3.t">Suporte de TI na IZATEC</h4><p data-i18n="j3.p">Suporte a alunos em uma plataforma de aulas de programação e criação de conteúdos sobre Java e Python.</p></div></li>
           <li><span class="when" data-i18n="j2.when">2025 a 2027</span><div><h4 data-i18n="j2.t">Análise e Desenvolvimento de Sistemas, UNG</h4><p data-i18n="j2.p">Tecnólogo EAD, cursando, com conclusão prevista para 2027.</p></div></li>
-          <li><span class="when">2026</span><div><h4 data-i18n="j4.t">Cursos complementares</h4><p data-i18n="j4.p">Mais de 150 horas de cursos de tecnologia na Alura, FIAP e Anthropic Academy, incluindo Git e GitHub.</p><a class="tl-link" href="#certificados"><span data-i18n="j4.link">Ver certificados</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div></li>
+          <li><span class="when">2026</span><div><h4 data-i18n="j4.t">Cursos complementares</h4><p data-i18n="j4.p">Mais de 150 horas de cursos de tecnologia na FIAP e na Alura, incluindo Git e GitHub.</p><a class="tl-link" href="#certificados"><span data-i18n="j4.link">Ver certificados</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div></li>
         </ol>
       </div>
       <div class="reveal" style="--d:80ms">
@@ -502,38 +545,38 @@ html:has(.modal[open]){overflow:hidden}
     <div class="cert-bar reveal">
       <div class="filters" role="group" aria-label="Filtrar certificados por tema" data-i18n-label="c.filter" hidden>
         <button class="chip" type="button" data-f="all" aria-pressed="true"><span data-i18n="c.f.all">Todos</span><span class="chip-n"></span></button>
+        <button class="chip" type="button" data-f="dados" aria-pressed="false"><span data-i18n="c.f.dados">Dados</span><span class="chip-n"></span></button>
+        <button class="chip" type="button" data-f="ia" aria-pressed="false"><span data-i18n="c.f.ia">IA</span><span class="chip-n"></span></button>
         <button class="chip" type="button" data-f="python" aria-pressed="false"><span>Python</span><span class="chip-n"></span></button>
         <button class="chip" type="button" data-f="git" aria-pressed="false"><span data-i18n="c.f.git">Git e GitHub</span><span class="chip-n"></span></button>
-        <button class="chip" type="button" data-f="ia" aria-pressed="false"><span data-i18n="c.f.ia">IA</span><span class="chip-n"></span></button>
       </div>
-      <p class="cert-sum" id="cert-sum" aria-live="polite">5 certificados · 38 horas · todos verificáveis online</p>
+      <div class="sort" role="group" aria-label="Ordenar certificados" data-i18n-label="c.sort" hidden>
+        <span class="sort-l" aria-hidden="true" data-i18n="c.sortl">Ordenar</span>
+        <button type="button" data-s="rank" aria-pressed="true" data-i18n="c.s.rank">Relevância</button>
+        <button type="button" data-s="date" aria-pressed="false" data-i18n="c.s.date">Mais recentes</button>
+      </div>
     </div>
+    <p class="cert-sum reveal" id="cert-sum" aria-live="polite">7 certificados · 158 horas · todos verificáveis online</p>
     <div class="certs">
-      <article class="card cert reveal" id="cert-python-condicionais" data-topics="python" data-hours="2" data-platform="Alura">
-        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-10">10 fev 2026</time></p>
-        <h3><a href="#cert-python-condicionais">Praticando Python: condicionais if, elif e else</a></h3>
-        <p class="cert-desc" data-i18n="c1.d">Curso prático, baseado em exercícios. Revisei a estrutura de decisão do Python e resolvi problemas em que o programa precisa escolher entre vários caminhos com if, elif e else.</p>
-        <ul class="tags" data-i18n="c1.s"><li>Estruturas condicionais</li><li>Lógica de programação</li><li>Python</li></ul>
-        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/f481ab0b-d1ef-4ce9-aebf-4af77cf9a9c1" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-        <p class="cert-foot"><span class="cert-h">2 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      <article class="card cert cert-feat reveal" id="cert-fiap-big-data" data-rank="1" data-topics="dados" data-hours="60" data-platform="FIAP" data-key="80A55FA5DDD70FFC8AD91CBB99855DB6">
+        <p class="card-meta"><span class="num">FIAP</span><span class="badge" data-i18n="c.feat">Destaque</span><time datetime="2026-06-02">2 jun 2026</time></p>
+        <h3><a href="#cert-fiap-big-data">Big Data &amp; Analytics</a></h3>
+        <p class="cert-desc" data-i18n="c6.d">Nano Course da FIAP sobre como as empresas lidam com grandes volumes de dados. Passa pelos conceitos de Big Data, pelas etapas de coleta, armazenamento e processamento e pelo uso de análises para apoiar decisões de negócio.</p>
+        <ul class="tags" data-i18n="c6.s"><li>Conceitos de Big Data</li><li>Análise de dados</li><li>Visualização de dados</li><li>Decisão orientada por dados</li></ul>
+        <p class="cert-key"><span data-i18n="c.key">Chave de validação</span>: <code>80A55FA5DDD70FFC8AD91CBB99855DB6</code></p>
+        <a class="cert-verify" href="https://on.fiap.com.br/validar-certificado/" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">60 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
       </article>
-      <article class="card cert reveal" id="cert-git-versao" data-topics="git" data-hours="8" data-platform="Alura" style="--d:80ms">
-        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
-        <h3><a href="#cert-git-versao">Git e GitHub: dominando controle de versão de código</a></h3>
-        <p class="cert-desc" data-i18n="c2.d">Vai além dos comandos básicos do Git. Aprendi a ler o histórico com os parâmetros do git log, comparar alterações, separar o trabalho em branches e juntá-lo de volta com merge ou rebase. Também estudei a relação entre working tree e staging area e como publicar versões com tags e releases no GitHub.</p>
-        <ul class="tags" data-i18n="c2.s"><li>Branches</li><li>Merge e rebase</li><li>Histórico com git log</li><li>Staging area</li><li>Tags e releases</li></ul>
-        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/8ee76ff7-894a-4334-9e6b-2cb49d8ec914" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      <article class="card cert cert-feat reveal" id="cert-fiap-chatbots" data-rank="2" data-topics="ia" data-hours="60" data-platform="FIAP" data-key="DD3157D368716A74DC4D6C33AEE3EF2A" style="--d:80ms">
+        <p class="card-meta"><span class="num">FIAP</span><span class="badge" data-i18n="c.feat">Destaque</span><time datetime="2026-03-24">24 mar 2026</time></p>
+        <h3><a href="#cert-fiap-chatbots">Chatbots</a></h3>
+        <p class="cert-desc" data-i18n="c7.d">Nano Course da FIAP sobre assistentes virtuais de conversa. Mostra como um chatbot interpreta o que o usuário escreve, como se monta o fluxo de uma conversa e onde o atendimento automatizado entra no dia a dia de uma empresa.</p>
+        <ul class="tags" data-i18n="c7.s"><li>Chatbots</li><li>Fluxos de conversa</li><li>Atendimento automatizado</li><li>Processamento de linguagem natural</li></ul>
+        <p class="cert-key"><span data-i18n="c.key">Chave de validação</span>: <code>DD3157D368716A74DC4D6C33AEE3EF2A</code></p>
+        <a class="cert-verify" href="https://on.fiap.com.br/validar-certificado/" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">60 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
       </article>
-      <article class="card cert reveal" id="cert-git-colaboracao" data-topics="git" data-hours="8" data-platform="Alura" style="--d:160ms">
-        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
-        <h3><a href="#cert-git-colaboracao">Git e GitHub: compartilhando e colaborando em projetos</a></h3>
-        <p class="cert-desc" data-i18n="c3.d">Começa do zero: instalar o Git, criar um repositório no GitHub e manter as cópias local e remota sincronizadas. Depois vem o trabalho em equipe, com resolução de conflitos, uso do Git dentro da IDE e correções no histórico de commits. É o fluxo que uso para publicar meus projetos, incluindo este site.</p>
-        <ul class="tags" data-i18n="c3.s"><li>Git</li><li>GitHub</li><li>Resolução de conflitos</li><li>Repositórios remotos</li><li>Histórico de commits</li><li>Git na IDE</li></ul>
-        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/d77ce05d-a9cf-4ef1-b93f-2cf09f645cd1" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
-      </article>
-      <article class="card cert reveal" id="cert-python-ia" data-topics="python ia" data-hours="12" data-platform="Alura">
+      <article class="card cert reveal" id="cert-python-ia" data-rank="3" data-topics="python ia dados" data-hours="12" data-platform="Alura" style="--d:160ms">
         <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
         <h3><a href="#cert-python-ia">Python: Inteligência Artificial Aplicada</a></h3>
         <p class="cert-desc" data-i18n="c4.d">Curso de Python com foco prático, feito no Google Colab. Cobre variáveis, strings, condicionais, laços, funções, listas e dicionários, e depois análise de dados com Pandas. Na parte de IA, mostra como conectar um programa Python a uma API de inteligência artificial.</p>
@@ -541,13 +584,37 @@ html:has(.modal[open]){overflow:hidden}
         <a class="cert-verify" href="https://cursos.alura.com.br/certificate/661c6918-eaaa-4d60-98b6-b59802ab5745" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
         <p class="cert-foot"><span class="cert-h">12 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
       </article>
-      <article class="card cert reveal" id="cert-python-primeira-app" data-topics="python" data-hours="8" data-platform="Alura" style="--d:80ms">
+      <article class="card cert reveal" id="cert-git-colaboracao" data-rank="4" data-topics="git" data-hours="8" data-platform="Alura">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
+        <h3><a href="#cert-git-colaboracao">Git e GitHub: compartilhando e colaborando em projetos</a></h3>
+        <p class="cert-desc" data-i18n="c3.d">Começa do zero: instalar o Git, criar um repositório no GitHub e manter as cópias local e remota sincronizadas. Depois vem o trabalho em equipe, com resolução de conflitos, uso do Git dentro da IDE e correções no histórico de commits. É o fluxo que uso para publicar meus projetos, incluindo este site.</p>
+        <ul class="tags" data-i18n="c3.s"><li>Git</li><li>GitHub</li><li>Resolução de conflitos</li><li>Repositórios remotos</li><li>Histórico de commits</li><li>Git na IDE</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/d77ce05d-a9cf-4ef1-b93f-2cf09f645cd1" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-git-versao" data-rank="5" data-topics="git" data-hours="8" data-platform="Alura" style="--d:80ms">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-08">8 fev 2026</time></p>
+        <h3><a href="#cert-git-versao">Git e GitHub: dominando controle de versão de código</a></h3>
+        <p class="cert-desc" data-i18n="c2.d">Aprofunda o uso do Git no dia a dia. Aprendi a ler o histórico com os parâmetros do git log, comparar alterações, separar o trabalho em branches e juntá-lo de volta com merge ou rebase. Também estudei a relação entre working tree e staging area e como publicar versões com tags e releases no GitHub.</p>
+        <ul class="tags" data-i18n="c2.s"><li>Branches</li><li>Merge e rebase</li><li>Histórico com git log</li><li>Staging area</li><li>Tags e releases</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/8ee76ff7-894a-4334-9e6b-2cb49d8ec914" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-python-primeira-app" data-rank="6" data-topics="python" data-hours="8" data-platform="Alura" style="--d:160ms">
         <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-07">7 fev 2026</time></p>
         <h3><a href="#cert-python-primeira-app">Python: crie a sua primeira aplicação</a></h3>
         <p class="cert-desc" data-i18n="c5.d">Meu primeiro contato com Python, construindo um programa completo no VS Code: um sistema de cadastro de restaurantes com menu no terminal. Nele usei strings, funções, listas, dicionários, laços de repetição e tratamento de erros com try/except.</p>
         <ul class="tags" data-i18n="c5.s"><li>Python</li><li>Funções</li><li>Listas e dicionários</li><li>Tratamento de exceções</li><li>VS Code</li></ul>
         <a class="cert-verify" href="https://cursos.alura.com.br/certificate/301eeae9-1c25-4820-8ed2-698893ca8d50" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
         <p class="cert-foot"><span class="cert-h">8 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
+      </article>
+      <article class="card cert reveal" id="cert-python-condicionais" data-rank="7" data-topics="python" data-hours="2" data-platform="Alura">
+        <p class="card-meta"><span class="num">Alura</span><time datetime="2026-02-10">10 fev 2026</time></p>
+        <h3><a href="#cert-python-condicionais">Praticando Python: condicionais if, elif e else</a></h3>
+        <p class="cert-desc" data-i18n="c1.d">Curso prático, baseado em exercícios. Revisei a estrutura de decisão do Python e resolvi problemas em que o programa precisa escolher entre vários caminhos com if, elif e else.</p>
+        <ul class="tags" data-i18n="c1.s"><li>Estruturas condicionais</li><li>Lógica de programação</li><li>Python</li></ul>
+        <a class="cert-verify" href="https://cursos.alura.com.br/certificate/f481ab0b-d1ef-4ce9-aebf-4af77cf9a9c1" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="cert-foot"><span class="cert-h">2 horas</span><span class="card-cta"><span data-i18n="c.more">Ver detalhes</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></p>
       </article>
     </div>
   </section>
@@ -578,21 +645,25 @@ html:has(.modal[open]){overflow:hidden}
 <dialog class="modal" id="cert-modal" aria-labelledby="cm-title">
   <div class="modal-box">
     <div class="modal-top">
-      <p class="modal-kicker" data-i18n="c.kicker">Certificado de conclusão</p>
+      <p class="modal-kicker" data-i18n="c.kicker">Certificado</p>
       <button class="tool modal-x" type="button" aria-label="Fechar" data-i18n-label="c.close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <h3 class="modal-title" id="cm-title"></h3>
     <dl class="modal-facts">
       <div><dt data-i18n="c.plat">Plataforma</dt><dd id="cm-plat"></dd></div>
-      <div><dt data-i18n="c.date">Data de conclusão</dt><dd id="cm-date"></dd></div>
+      <div><dt data-i18n="c.date">Data</dt><dd id="cm-date"></dd></div>
       <div><dt data-i18n="c.load">Carga horária</dt><dd id="cm-hours"></dd></div>
     </dl>
     <div class="modal-sec"><h4 data-i18n="c.desc">Descrição</h4><p class="modal-desc" id="cm-desc"></p></div>
     <div class="modal-sec"><h4 data-i18n="c.skills">Competências</h4><ul class="tags" id="cm-skills"></ul></div>
+    <div class="modal-sec modal-key" id="cm-keybox" hidden>
+      <h4 data-i18n="c.key">Chave de validação</h4>
+      <div class="key-row"><code id="cm-key"></code><button class="copy" id="cm-copykey" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span class="cm-copykey-t" data-i18n="c.copykey">Copiar chave</span></button></div>
+    </div>
+    <p class="modal-note" id="cm-note"><span data-i18n="c.note">A verificação abre a página oficial do certificado, sem precisar de login.</span><span data-i18n="c.notekey" hidden>Abre a página de validação da instituição, sem login. Cole a chave no campo e clique em Validar.</span></p>
     <div class="modal-foot">
       <a class="btn btn-primary" id="cm-verify" href="#" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       <button class="copy" id="cm-copy" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="cm-copy-t" data-i18n="c.copy">Copiar link</span></button>
-      <p class="modal-note" data-i18n="c.note">A verificação abre a página oficial do certificado, sem precisar de login.</p>
     </div>
   </div>
 </dialog>
@@ -671,7 +742,7 @@ html:has(.modal[open]){overflow:hidden}
     'j1.p': 'I support five small businesses: identifying their needs, explaining solutions in plain language and tracking requests against agreed deadlines.',
     'j3.when': 'Mar to Jul 2026', 'j3.t': 'IT support at IZATEC',
     'j3.p': 'Supported students on a programming course platform and created learning content on Java and Python.',
-    'j4.t': 'Additional courses', 'j4.p': 'Over 150 hours of technology courses at Alura, FIAP and Anthropic Academy, including Git and GitHub.',
+    'j4.t': 'Additional courses', 'j4.p': 'Over 150 hours of technology courses at FIAP and Alura, including Git and GitHub.',
     'j4.link': 'See certificates',
     'j2.when': '2025 to 2027', 'j2.t': 'Systems Analysis and Development, UNG', 'j2.p': 'Online technology degree, in progress, expected to graduate in 2027.',
     's1.t': 'Support and hardware', 's1.tags': '<li>Windows 10/11</li><li>OS installation</li><li>PC assembly</li><li>Hardware diagnosis</li><li>Drivers and printers</li><li>User support</li><li>Documentation</li>',
@@ -680,16 +751,22 @@ html:has(.modal[open]){overflow:hidden}
     's2.t': 'Data and BI', 's3.t': 'Development and automation', 's3.tags': '<li>Python</li><li>n8n</li><li>Programming logic</li><li>Git</li><li>GitHub</li>',
     'c.title': 'Certificates and completed courses.',
     'c.sub': 'Every certificate has an official verification link. Select one to see what the course covered and the skills involved.',
-    'c.filter': 'Filter certificates by topic', 'c.f.all': 'All', 'c.f.git': 'Git and GitHub', 'c.f.ia': 'AI',
-    'c.more': 'View details', 'c.verify': 'Verify credential', 'c.kicker': 'Certificate of completion', 'c.close': 'Close',
-    'c.plat': 'Platform', 'c.date': 'Completion date', 'c.load': 'Course hours', 'c.desc': 'Description', 'c.skills': 'Skills',
+    'c.filter': 'Filter certificates by topic', 'c.f.all': 'All', 'c.f.git': 'Git and GitHub', 'c.f.ia': 'AI', 'c.f.dados': 'Data',
+    'c.sort': 'Sort certificates', 'c.sortl': 'Sort', 'c.s.rank': 'Relevance', 'c.s.date': 'Most recent', 'c.feat': 'Featured',
+    'c.key': 'Validation key', 'c.copykey': 'Copy key', 'c.notekey': 'Opens the institution’s validation page. No login required. Paste the key into the field and click Validar.',
+    'c.more': 'View details', 'c.verify': 'Verify credential', 'c.kicker': 'Certificate', 'c.close': 'Close',
+    'c.plat': 'Platform', 'c.date': 'Date', 'c.load': 'Course hours', 'c.desc': 'Description', 'c.skills': 'Skills',
     'c.copy': 'Copy link', 'c.note': 'Verification opens the official certificate page. No login required.',
     'c.sum': '{n} certificates · {h} hours · all verifiable online', 'c.sumf': '{n} of {t} certificates · {h} hours',
-    'c.hrs': '{h} hours', 'c.copied': 'Link copied', 'c.copyfail': 'Couldn’t copy',
+    'c.hrs': '{h} hours', 'c.copied': 'Link copied', 'c.keycopied': 'Key copied', 'c.copyfail': 'Couldn’t copy',
     'c1.d': 'A hands-on, exercise-based course. I reviewed how Python makes decisions and solved problems where the program has to choose between several paths with if, elif and else.',
     'c1.s': '<li>Conditional statements</li><li>Programming logic</li><li>Python</li>',
-    'c2.d': 'Goes beyond the basic Git commands. I learned to read history with git log options, compare changes, split work into branches and bring it back together with merge or rebase. I also studied how the working tree relates to the staging area, and how to publish versions with tags and releases on GitHub.',
+    'c2.d': 'Covers everyday Git use in more depth. I learned to read history with git log options, compare changes, split work into branches and bring it back together with merge or rebase. I also studied how the working tree relates to the staging area, and how to publish versions with tags and releases on GitHub.',
     'c2.s': '<li>Branches</li><li>Merge and rebase</li><li>History with git log</li><li>Staging area</li><li>Tags and releases</li>',
+    'c6.d': 'A FIAP Nano Course on how companies handle large volumes of data. It covers Big Data concepts, the collection, storage and processing stages, and the use of analytics to support business decisions.',
+    'c6.s': '<li>Big Data concepts</li><li>Data analysis</li><li>Data visualization</li><li>Data-driven decisions</li>',
+    'c7.d': 'A FIAP Nano Course on conversational virtual assistants. It shows how a chatbot interprets what the user types, how a conversation flow is built, and where automated support fits into a company’s daily work.',
+    'c7.s': '<li>Chatbots</li><li>Conversation flows</li><li>Automated support</li><li>Natural language processing</li>',
     'c3.d': 'Starts from scratch: installing Git, creating a GitHub repository and keeping the local and remote copies in sync. Then comes teamwork, with conflict resolution, Git inside the IDE and fixes to the commit history. It’s the workflow I use to publish my projects, this site included.',
     'c3.s': '<li>Git</li><li>GitHub</li><li>Conflict resolution</li><li>Remote repositories</li><li>Commit history</li><li>Git in the IDE</li>',
     'c4.d': 'A practical Python course run in Google Colab. It covers variables, strings, conditionals, loops, functions, lists and dictionaries, then data analysis with Pandas. The AI part shows how to connect a Python program to an artificial intelligence API.',
@@ -704,7 +781,7 @@ html:has(.modal[open]){overflow:hidden}
   const PT = {
     'toast.ok': 'E-mail copiado', 'toast.fail': 'Não foi possível copiar. Use o link de e-mail.',
     'c.sum': '{n} certificados · {h} horas · todos verificáveis online', 'c.sumf': '{n} de {t} certificados · {h} horas',
-    'c.hrs': '{h} horas', 'c.copied': 'Link copiado', 'c.copyfail': 'Não foi possível copiar'
+    'c.hrs': '{h} horas', 'c.copied': 'Link copiado', 'c.keycopied': 'Chave copiada', 'c.copyfail': 'Não foi possível copiar'
   };
   const textNodes = $$('[data-i18n]');
   const labelNodes = $$('[data-i18n-label]');
@@ -932,6 +1009,11 @@ html:has(.modal[open]){overflow:hidden}
     $('#cm-desc').textContent = $('.cert-desc', c).textContent;
     $('#cm-skills').innerHTML = $('.tags', c).innerHTML;
     $('#cm-verify').href = $('.cert-verify', c).href;
+    const key = c.dataset.key || '';
+    $('#cm-keybox').hidden = !key;
+    $('#cm-key').textContent = key;
+    $('[data-i18n="c.note"]', modal).hidden = !!key;
+    $('[data-i18n="c.notekey"]', modal).hidden = !key;
   }
   function renderCerts() {
     certs.forEach(c => {
@@ -962,6 +1044,18 @@ html:has(.modal[open]){overflow:hidden}
   });
   $('.filters').hidden = false;
 
+  /* Ordem: relevância (data-rank, a ordem escolhida) ou mais recentes (data, com a relevância desempatando) */
+  const grid = $('.certs');
+  const dateOf = c => $('time', c).getAttribute('datetime');
+  const sortBtns = $$('.sort button');
+  sortBtns.forEach(b => b.addEventListener('click', () => {
+    sortBtns.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    const byRank = (a, z) => a.dataset.rank - z.dataset.rank;
+    const sorted = [...certs].sort(b.dataset.s === 'date' ? (a, z) => dateOf(z).localeCompare(dateOf(a)) || byRank(a, z) : byRank);
+    sorted.forEach(c => grid.append(c));
+  }));
+  $('.sort').hidden = false;
+
   function openModal(c) {
     openCert = c;
     fillModal(c);
@@ -990,6 +1084,20 @@ html:has(.modal[open]){overflow:hidden}
     });
     addEventListener('hashchange', certFromHash);
 
+    const keyBtn = $('#cm-copykey');
+    if (navigator.clipboard && window.isSecureContext) {
+      keyBtn.hidden = false;
+      let keyTimer;
+      keyBtn.addEventListener('click', async () => {
+        if (!openCert) return;
+        const label = $('.cm-copykey-t', keyBtn);
+        try { await navigator.clipboard.writeText(openCert.dataset.key); label.textContent = t('c.keycopied'); keyBtn.classList.add('is-done'); }
+        catch (e) { label.textContent = t('c.copyfail'); }
+        clearTimeout(keyTimer);
+        keyTimer = setTimeout(() => { label.textContent = t('c.copykey'); keyBtn.classList.remove('is-done'); }, 2000);
+      });
+    }
+
     const linkBtn = $('#cm-copy');
     if (navigator.clipboard && window.isSecureContext) {
       linkBtn.hidden = false;
@@ -1000,10 +1108,10 @@ html:has(.modal[open]){overflow:hidden}
         u.search = lang === 'en' ? '?lang=en' : '';
         u.hash = openCert.id;
         const label = $('.cm-copy-t', linkBtn);
-        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); }
+        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); linkBtn.classList.add('is-done'); }
         catch (e) { label.textContent = t('c.copyfail'); }
         clearTimeout(linkTimer);
-        linkTimer = setTimeout(() => { label.textContent = t('c.copy'); }, 2000);
+        linkTimer = setTimeout(() => { label.textContent = t('c.copy'); linkBtn.classList.remove('is-done'); }, 2000);
       });
     }
   }
