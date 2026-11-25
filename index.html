@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-ynzQqrESxzRMCYE29LLsCKS4VlsGoG4oqbl4ck2lwm4='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-tbzuNRNZHrB+yTTBDiGdZLbw0lW/bj7O3gNUR6sgstU='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
@@ -276,8 +276,8 @@ html:has(.modal[open]){overflow:hidden}
 .modal-desc{font-size:17px}
 .modal-sec+.modal-sec{margin-top:28px}
 .modal .tags{margin:0;padding:0}
-.modal-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:32px;padding-top:24px;border-top:1px dashed var(--line-strong)}
-.modal-note{flex-basis:100%;color:var(--muted);font-size:14px}
+.modal-note{margin-top:24px;color:var(--muted);font-size:14px}
+.modal-foot{--pad:clamp(24px,4vw,40px);position:sticky;bottom:0;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin:16px calc(-1 * var(--pad)) calc(-1 * var(--pad));padding:16px var(--pad) max(var(--pad),env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--surface)}
 
 /* Responsivo */
 @media (max-width:960px){
@@ -318,6 +318,25 @@ html:has(.modal[open]){overflow:hidden}
 @media (max-width:420px){
   .links a{padding:0 5px;font-size:14px}
   .links a::after{left:5px;right:5px}
+}
+@media (max-width:359px){
+  .links a{padding:0 3px}
+  .links a::after{left:3px;right:3px}
+}
+@media (pointer:coarse){
+  .sort button{min-height:40px}
+}
+.copy.is-done{border-color:var(--accent);color:var(--accent)}
+@media (max-width:420px){
+  .modal-foot{flex-wrap:nowrap}
+  .modal-foot .btn{flex:1;justify-content:center;padding:0 14px}
+  .modal-foot .btn{gap:8px;white-space:nowrap}
+}
+@media (max-width:359px){
+  .modal-foot .btn{padding:0 12px;font-size:14px}
+  .modal-foot .btn svg{display:none}
+  #cm-copy{flex:none;width:48px;min-height:48px;padding:0;justify-content:center}
+  #cm-copy .cm-copy-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 }
 
 /* Movimento */
@@ -641,10 +660,10 @@ html:has(.modal[open]){overflow:hidden}
       <h4 data-i18n="c.key">Chave de validação</h4>
       <div class="key-row"><code id="cm-key"></code><button class="copy" id="cm-copykey" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span class="cm-copykey-t" data-i18n="c.copykey">Copiar chave</span></button></div>
     </div>
+    <p class="modal-note" id="cm-note"><span data-i18n="c.note">A verificação abre a página oficial do certificado, sem precisar de login.</span><span data-i18n="c.notekey" hidden>Abre a página de validação da instituição, sem login. Cole a chave no campo e clique em Validar.</span></p>
     <div class="modal-foot">
       <a class="btn btn-primary" id="cm-verify" href="#" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       <button class="copy" id="cm-copy" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="cm-copy-t" data-i18n="c.copy">Copiar link</span></button>
-      <p class="modal-note" id="cm-note"><span data-i18n="c.note">A verificação abre a página oficial do certificado, sem precisar de login.</span><span data-i18n="c.notekey" hidden>Abre a página de validação da instituição, sem login. Cole a chave no campo e clique em Validar.</span></p>
     </div>
   </div>
 </dialog>
@@ -1072,10 +1091,10 @@ html:has(.modal[open]){overflow:hidden}
       keyBtn.addEventListener('click', async () => {
         if (!openCert) return;
         const label = $('.cm-copykey-t', keyBtn);
-        try { await navigator.clipboard.writeText(openCert.dataset.key); label.textContent = t('c.keycopied'); }
+        try { await navigator.clipboard.writeText(openCert.dataset.key); label.textContent = t('c.keycopied'); keyBtn.classList.add('is-done'); }
         catch (e) { label.textContent = t('c.copyfail'); }
         clearTimeout(keyTimer);
-        keyTimer = setTimeout(() => { label.textContent = t('c.copykey'); }, 2000);
+        keyTimer = setTimeout(() => { label.textContent = t('c.copykey'); keyBtn.classList.remove('is-done'); }, 2000);
       });
     }
 
@@ -1089,10 +1108,10 @@ html:has(.modal[open]){overflow:hidden}
         u.search = lang === 'en' ? '?lang=en' : '';
         u.hash = openCert.id;
         const label = $('.cm-copy-t', linkBtn);
-        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); }
+        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); linkBtn.classList.add('is-done'); }
         catch (e) { label.textContent = t('c.copyfail'); }
         clearTimeout(linkTimer);
-        linkTimer = setTimeout(() => { label.textContent = t('c.copy'); }, 2000);
+        linkTimer = setTimeout(() => { label.textContent = t('c.copy'); linkBtn.classList.remove('is-done'); }, 2000);
       });
     }
   }
