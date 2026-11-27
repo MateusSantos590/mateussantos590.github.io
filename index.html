@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-JpDo0eGuo/3A+55UOPTzhheUkyR0/qvXSISX3O1SK0c='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-XRh5JS5vWgrOhbBQ3gDJrTK9GxeedwcJQIHxepdtMaI=' 'sha256-sJ/jbY1L/WrdJkDxpXAxt5a8nJXxrJUiUzKDYq6s84g='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mateus Telles | Suporte em TI e dados</title>
@@ -43,6 +43,13 @@
   --font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --ease:cubic-bezier(.16,1,.3,1);--radius:14px;--radius-sm:8px;--wrap:1160px;
+  /* transitions.dev: Icon swap e Success check. Tempos e curvas originais; distância e desfoque do check
+     reduzidos na proporção do ícone (o padrão de 40px/10px foi feito para um ícone de 48px; aqui são 16px). */
+  --icon-swap-dur:250ms;--icon-swap-blur:2px;--icon-swap-start-scale:.25;--icon-swap-ease:ease-in-out;
+  --check-opacity-dur:500ms;--check-rotate-dur:500ms;--check-rotate-from:80deg;--check-bob-dur:500ms;--check-y-amount:8px;
+  --check-blur-dur:500ms;--check-blur-from:3px;--check-path-dur:500ms;--check-path-delay:80ms;
+  --check-ease-out:cubic-bezier(.22,1,.36,1);--check-ease-opacity:cubic-bezier(.22,1,.36,1);--check-ease-rotate:cubic-bezier(.22,1,.36,1);
+  --check-ease-bob:cubic-bezier(.34,1.35,.64,1);--check-ease-path:cubic-bezier(.22,1,.36,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -329,6 +336,28 @@ html:has(.modal[open]){overflow:hidden}
   .sort button{min-height:40px}
 }
 .copy.is-done{border-color:var(--accent);color:var(--accent)}
+/* transitions.dev: Icon swap */
+.t-icon-swap{position:relative;display:inline-grid}
+.t-icon-swap .t-icon{grid-area:1/1;display:grid;place-items:center;transition:opacity var(--icon-swap-dur) var(--icon-swap-ease),filter var(--icon-swap-dur) var(--icon-swap-ease),transform var(--icon-swap-dur) var(--icon-swap-ease)}
+.t-icon-swap svg{display:block}
+.t-icon-swap[data-state="a"] .t-icon[data-icon="a"],.t-icon-swap[data-state="b"] .t-icon[data-icon="b"]{opacity:1;filter:blur(0);transform:scale(1)}
+.t-icon-swap[data-state="a"] .t-icon[data-icon="b"],.t-icon-swap[data-state="b"] .t-icon[data-icon="a"]{opacity:0;filter:blur(var(--icon-swap-blur));transform:scale(var(--icon-swap-start-scale))}
+/* transitions.dev: Success check (traço do check medido: 19,8 unidades, arredondado para 21) */
+.t-success-check{display:inline-block;transform-origin:center;opacity:0}
+.t-success-check svg{display:block;overflow:visible}
+.t-success-check svg path{stroke-dasharray:21;stroke-dashoffset:21}
+.t-success-check[data-state="in"]{animation:t-check-fade var(--check-opacity-dur) var(--check-ease-opacity) forwards,t-check-rotate var(--check-rotate-dur) var(--check-ease-rotate) forwards,t-check-blur var(--check-blur-dur) var(--check-ease-out) forwards,t-check-bob var(--check-bob-dur) var(--check-ease-bob) forwards}
+.t-success-check[data-state="in"] svg path{animation:t-check-draw var(--check-path-dur) var(--check-ease-path) var(--check-path-delay,0ms) forwards}
+@keyframes t-check-fade{from{opacity:0}to{opacity:1}}
+@keyframes t-check-rotate{from{transform:rotate(var(--check-rotate-from))}to{transform:rotate(0deg)}}
+@keyframes t-check-blur{from{filter:blur(var(--check-blur-from))}to{filter:blur(0)}}
+@keyframes t-check-bob{from{translate:0 var(--check-y-amount)}to{translate:0 0}}
+@keyframes t-check-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+  .t-icon-swap .t-icon{transition:none!important}
+  .t-success-check{animation:none!important;opacity:1}
+  .t-success-check svg path{animation:none!important;stroke-dashoffset:0!important}
+}
 @media (max-width:420px){
   .modal-foot{flex-wrap:nowrap}
   .modal-foot .btn{flex:1;justify-content:center;padding:0 14px}
@@ -645,7 +674,7 @@ html:has(.modal[open]){overflow:hidden}
       <div class="contact-list stagger" style="--d:80ms">
         <div class="row">
           <a class="row-link" href="mailto:mateussantos147854@gmail.com"><span><small>E-mail</small><span class="addr">mateussantos147854@gmail.com</span></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-          <button class="copy" id="copy" type="button" data-email="mateussantos147854@gmail.com" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span data-i18n="ct.copy">Copiar e-mail</span></button>
+          <button class="copy" id="copy" type="button" data-email="mateussantos147854@gmail.com" hidden><span class="t-icon-swap" data-state="a" aria-hidden="true"><span class="t-icon" data-icon="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg></span><span class="t-icon" data-icon="b"><span class="t-success-check" data-state="out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span></span><span data-i18n="ct.copy">Copiar e-mail</span></button>
         </div>
         <div class="row"><a class="row-link" href="https://www.linkedin.com/in/mateusantostelles/" target="_blank" rel="noopener noreferrer"><span><small data-i18n="ct.li">Trajetória profissional</small>LinkedIn</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
         <div class="row"><a class="row-link" href="https://github.com/MateusSantos590" target="_blank" rel="noopener noreferrer"><span><small data-i18n="ct.gh">Código e projetos</small>GitHub</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
@@ -675,12 +704,12 @@ html:has(.modal[open]){overflow:hidden}
     <div class="modal-sec"><h4 data-i18n="c.skills">Competências</h4><ul class="tags" id="cm-skills"></ul></div>
     <div class="modal-sec modal-key" id="cm-keybox" hidden>
       <h4 data-i18n="c.key">Chave de validação</h4>
-      <div class="key-row"><code id="cm-key"></code><button class="copy" id="cm-copykey" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg><span class="cm-copykey-t" data-i18n="c.copykey">Copiar chave</span></button></div>
+      <div class="key-row"><code id="cm-key"></code><button class="copy" id="cm-copykey" type="button" hidden><span class="t-icon-swap" data-state="a" aria-hidden="true"><span class="t-icon" data-icon="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></svg></span><span class="t-icon" data-icon="b"><span class="t-success-check" data-state="out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span></span><span class="cm-copykey-t" data-i18n="c.copykey">Copiar chave</span></button></div>
     </div>
     <p class="modal-note" id="cm-note"><span data-i18n="c.note">A verificação abre a página oficial do certificado, sem precisar de login.</span><span data-i18n="c.notekey" hidden>Abre a página de validação da instituição, sem login. Cole a chave no campo e clique em Validar.</span></p>
     <div class="modal-foot">
       <a class="btn btn-primary" id="cm-verify" href="#" target="_blank" rel="noopener noreferrer"><span data-i18n="c.verify">Verificar credencial</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-      <button class="copy" id="cm-copy" type="button" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span class="cm-copy-t" data-i18n="c.copy">Copiar link</span></button>
+      <button class="copy" id="cm-copy" type="button" hidden><span class="t-icon-swap" data-state="a" aria-hidden="true"><span class="t-icon" data-icon="a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span class="t-icon" data-icon="b"><span class="t-success-check" data-state="out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span></span><span class="cm-copy-t" data-i18n="c.copy">Copiar link</span></button>
     </div>
   </div>
 </dialog>
@@ -978,6 +1007,20 @@ html:has(.modal[open]){overflow:hidden}
   /* ---------- Copiar e-mail ---------- */
   const toast = $('.toast');
   let toastTimer;
+  /* Botões de copiar: o ícone troca pelo check (Icon swap) e o check se desenha (Success check); depois volta */
+  const flashDone = (btn, ms = 2000) => {
+    const swap = $('.t-icon-swap', btn), check = $('.t-success-check', btn);
+    if (!swap || !check) return;
+    clearTimeout(btn._done);
+    swap.dataset.state = 'b';
+    check.dataset.state = 'out';
+    void check.offsetWidth;
+    check.dataset.state = 'in';
+    btn._done = setTimeout(() => {
+      swap.dataset.state = 'a';
+      setTimeout(() => { if (swap.dataset.state === 'a') check.dataset.state = 'out'; }, 300);
+    }, ms);
+  };
   const showToast = msg => {
     toast.textContent = msg;
     toast.classList.add('show');
@@ -988,7 +1031,7 @@ html:has(.modal[open]){overflow:hidden}
   if (navigator.clipboard && window.isSecureContext) {
     copyBtn.hidden = false;
     copyBtn.addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(copyBtn.dataset.email); showToast(t('toast.ok')); }
+      try { await navigator.clipboard.writeText(copyBtn.dataset.email); showToast(t('toast.ok')); flashDone(copyBtn, 2400); }
       catch (e) { showToast(t('toast.fail')); }
     });
   }
@@ -1109,7 +1152,7 @@ html:has(.modal[open]){overflow:hidden}
       keyBtn.addEventListener('click', async () => {
         if (!openCert) return;
         const label = $('.cm-copykey-t', keyBtn);
-        try { await navigator.clipboard.writeText(openCert.dataset.key); label.textContent = t('c.keycopied'); keyBtn.classList.add('is-done'); }
+        try { await navigator.clipboard.writeText(openCert.dataset.key); label.textContent = t('c.keycopied'); keyBtn.classList.add('is-done'); flashDone(keyBtn); }
         catch (e) { label.textContent = t('c.copyfail'); }
         clearTimeout(keyTimer);
         keyTimer = setTimeout(() => { label.textContent = t('c.copykey'); keyBtn.classList.remove('is-done'); }, 2000);
@@ -1126,7 +1169,7 @@ html:has(.modal[open]){overflow:hidden}
         u.search = lang === 'en' ? '?lang=en' : '';
         u.hash = openCert.id;
         const label = $('.cm-copy-t', linkBtn);
-        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); linkBtn.classList.add('is-done'); }
+        try { await navigator.clipboard.writeText(u.href); label.textContent = t('c.copied'); linkBtn.classList.add('is-done'); flashDone(linkBtn); }
         catch (e) { label.textContent = t('c.copyfail'); }
         clearTimeout(linkTimer);
         linkTimer = setTimeout(() => { label.textContent = t('c.copy'); linkBtn.classList.remove('is-done'); }, 2000);
